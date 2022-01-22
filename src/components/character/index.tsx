@@ -6,11 +6,18 @@ import Router from 'next/router';
 import { setCookie } from 'nookies';
 
 type CharacterProps = {
-    data: Object;
+    data: {
+        thumbnail: {
+            path: string,
+            extension: string,
+        },
+        name: string,
+        id: number,
+    }
 }
 
 export default function Character({data}: CharacterProps): JSX.Element {
-    const imageCharacter = data.thumbnail.path + '.' + data.thumbnail.extension;
+    const imageCharacter = data?.thumbnail?.path + '.' + data?.thumbnail?.extension;
 
     return(
         <>  

@@ -9,15 +9,24 @@ import marvelLogo from '../../public/images/marvel-background.png';
 import LoaderIndicator from '../../components/loaderIndicator';
 
 type InfoCharacterProps = {
-    dataCharacter: Object;
+    
+    thumbnail: {
+        path: string,
+        extension: string,
+    },
+    name: string,
+    id: number,
+    description: string,
 }
 
-export default function InfoCharacter({dataCharacter}: InfoCharacterProps): JSX.Element {
-    const [data, setData] = useState(null);
+
+export default function InfoCharacter(): JSX.Element {
+    const [data, setData] = useState<InfoCharacterProps>();
     const [imagemSrc, setImagemSrc] = useState('');
 
-    useEffect(() => {        
-        setData(JSON.parse(localStorage?.getItem('data-character')));
+    useEffect(() => {    
+        const newData = JSON.parse(localStorage?.getItem('data-character') || '');
+        setData(newData);
     }, []);
 
     useEffect(() => {
@@ -27,45 +36,33 @@ export default function InfoCharacter({dataCharacter}: InfoCharacterProps): JSX.
     return (
         <div className={styles.container}>
             <div className={styles.body}>
-                {console.log(data)}
-                {
-                    data === null ? 
-                        (
-                            <LoaderIndicator />
-                        )
-                    :
-                        (
-                            <>
-                                <div className={styles.container}>
-                                    <div className={styles.containerImage}>
-                                        <Image
-                                            loader={() => imagemSrc}
-                                            src={imagemSrc} 
-                                            alt={data.name}
-                                            height={500} 
-                                            width={500}
-                                        />
-                                    </div>
-                                    <div className={styles.containerInfos}>
-                                        <h1 className={styles.textName}>Nome: {data.name} </h1>
-                                        <p className={styles.textDescription}>
-                                            Descrição: 
-                                            {
-                                                data.description !== '' ?
-                                                    (
-                                                        ' ' + data.description
-                                                    )
-                                                :
-                                                    (
-                                                        ' *não fornecida'
-                                                    )
-                                            }
-                                        </p>
-                                    </div>
-                                </div>
-                            </>
-                        )
-                }
+                <div className={styles.container}>
+                     <div className={styles.containerImage}>
+                        <Image
+                            loader={() => imagemSrc}
+                            src={imagemSrc} 
+                            alt={data?.name}
+                            height={500} 
+                            width={500}
+                        />
+                    </div>
+                    <div className={styles.containerInfos}>
+                        <h1 className={styles.textName}>Nome: {data?.name} </h1>
+                        <p className={styles.textDescription}>
+                            Descrição: 
+                            {
+                                data?.description !== '' ?
+                                    (
+                                        ' ' + data?.description
+                                    )
+                                :
+                                    (
+                                        ' *não fornecida'
+                                    )
+                            }
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     )

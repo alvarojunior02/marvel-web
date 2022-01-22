@@ -8,6 +8,16 @@ import Character from "../character";
 import LoaderIndicator from "../loaderIndicator";
 
 export default function ContainerCharacters(): JSX.Element {
+
+    type DataProps = {
+        thumbnail: {
+            path: string,
+            extension: string,
+        },
+        name: string,
+        id: number,
+    }
+
     const [characters, setCharacters] = useState([]);
     const [characterAux, setCharacterAux] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -99,7 +109,7 @@ export default function ContainerCharacters(): JSX.Element {
                             (   
                             characters
                                 .filter(character => filterCharacters(character))
-                                .map((data) => {
+                                .map((data: DataProps) => {
                                     return (
                                         <Character 
                                             key={data?.id}
