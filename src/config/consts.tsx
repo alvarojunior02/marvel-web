@@ -1,6 +1,6 @@
 import md5 from 'md5';
 
-export const baseURL = 'http://gateway.marvel.com/v1/public';
+export const baseURL = 'https://gateway.marvel.com/v1/public';
 
 export const publicKey = '4412a6d9c05caa9dd37426dc666ad79c';
 
