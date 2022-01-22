@@ -44,7 +44,11 @@ const Home: NextPage = () => {
     setPage(myParam);
 
     const { 'data-character': data } = parseCookies();
-    setNewData(JSON.parse(data));
+    try {
+      setNewData(JSON.parse(data));
+    } catch(e) {
+      console.log(e);
+    }
   }, [])
 
   return (

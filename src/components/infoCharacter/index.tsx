@@ -23,9 +23,14 @@ export default function InfoCharacter(): JSX.Element {
     const [data, setData] = useState<InfoCharacterProps>();
     const [imagemSrc, setImagemSrc] = useState('');
 
-    useEffect(() => {    
-        const newData = JSON.parse(localStorage?.getItem('data-character') || '');
-        setData(newData);
+    useEffect(() => {
+        try {
+            const newData = JSON.parse(localStorage?.getItem('data-character') || '');
+            setData(newData);
+        } catch (e) {
+            console.log(e);
+        }
+        
     }, []);
 
     useEffect(() => {
