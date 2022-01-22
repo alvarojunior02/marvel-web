@@ -34,7 +34,7 @@ export default function InfoCharacter(): JSX.Element {
     }, []);
 
     useEffect(() => {
-        setImagemSrc(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
+        setImagemSrc('https://' + data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
     }, [data])
 
     return (

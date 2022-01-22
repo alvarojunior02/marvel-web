@@ -17,7 +17,7 @@ type CharacterProps = {
 }
 
 export default function Character({data}: CharacterProps): JSX.Element {
-    const imageCharacter = data?.thumbnail?.path + '.' + data?.thumbnail?.extension;
+    const imageCharacter = 'https://' + data?.thumbnail?.path + '.' + data?.thumbnail?.extension;
 
     return(
         <>  
