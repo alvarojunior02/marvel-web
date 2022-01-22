@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.containerInfos {
+    max-width: 500px;
+    margin: 20px
+}
+
+.textName {
+    font-size: 5.5vh;
+    text-align: center;
+}
+
+.textDescription {
+    font-size: 4.5vh;
+    text-align: justify;
+}
+
+  
+  

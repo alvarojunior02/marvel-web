@@ -1,6 +1,9 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 //import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import Image from 'next/image';
+import Router from 'next/router';
+import { setCookie } from 'nookies';
 
 type CharacterProps = {
     data: Object;
@@ -16,10 +19,13 @@ export default function Character({data}: CharacterProps): JSX.Element {
                     <h2 className={styles.nameCharacter}>{data.name}</h2>
                 </div>
                 <div className={styles.containerImage}>
-                    <button
+                    <a
                         className={styles.clickImage}
-                        onClick={() => {}}
-                    >
+                        href="/?page=info-characters"
+                        onClick={() => {
+                            localStorage.setItem('data-character', JSON.stringify(data));
+                        }}
+                  >
                         <Image
                             loader={() => imageCharacter}
                             src={imageCharacter} 
@@ -27,7 +33,7 @@ export default function Character({data}: CharacterProps): JSX.Element {
                             height={300} 
                             width={300}
                         />
-                    </button>
+                    </a>
                     <p className={styles.clickForMore}>Clique na imagem para mais informações</p>
                 </div>
                 <div className={styles.containerInformations}>

@@ -90,7 +90,6 @@ export default function ContainerCharacters(): JSX.Element {
             </div>
             <div className={styles.container}>
                 <div id="1" className={styles.containerCharacters}>
-                    {console.log(characters)}
                     { 
                         characters.length === 0 ?
                             (

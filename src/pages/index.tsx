@@ -2,23 +2,18 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useState, useEffect, useLayoutEffect } from 'react';
 import type { NextPage } from 'next'
-import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import marvelLogo from '../../public/images/marvel-background.png';
 import ContainerCharacters from '../components/containerCharacters';
+import InfoCharacter from '../components/infoCharacter'
+import { parseCookies } from 'nookies';
 
 const Home: NextPage = () => {
-  const handleScrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
-
   const [size, setSize] = useState([1366, 768]);
   const [page, setPage] = useState('');
+  const [newData, setNewData] = useState({});
 
   function useWindowSize() {
     useLayoutEffect(() => {
@@ -34,10 +29,13 @@ const Home: NextPage = () => {
   useWindowSize();
 
   useEffect(() => {
-    setSize([
-      window.innerWidth, window.innerHeight
-    ]);
-  }, []);
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('page') || '';
+    setPage(myParam);
+
+    const { 'data-character': data } = parseCookies();
+    setNewData(data);
+  }, [])
 
   return (
     <div className={styles.container}>
@@ -67,16 +65,11 @@ const Home: NextPage = () => {
           }
           <div className={styles.navBar}>
             <nav>
-              <button
-                type='button'
-                onClick={() => {
-                  if (page !== 'characters') {
-                    setPage('characters');
-                  }
-                }}
+              <a
+                href='/?page=characters'
               >
                 <p>Personagens</p>
-              </button>
+              </a>
             </nav>
           </div>
         </div>
@@ -102,6 +95,10 @@ const Home: NextPage = () => {
               (
                 <ContainerCharacters />
               )
+            : page === 'info-characters' ?
+             (
+              <InfoCharacter dataCharacter={newData}/>
+             )
             : null
           }
       </div>
