@@ -9,7 +9,6 @@ import marvelLogo from '../../public/images/marvel-background.png';
 import LoaderIndicator from '../../components/loaderIndicator';
 
 type InfoCharacterProps = {
-    
     thumbnail: {
         path: string,
         extension: string,

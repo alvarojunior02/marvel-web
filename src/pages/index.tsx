@@ -10,10 +10,20 @@ import ContainerCharacters from '../components/containerCharacters';
 import InfoCharacter from '../components/infoCharacter'
 import { parseCookies } from 'nookies';
 
+type DataProps = {
+  thumbnail: {
+      path: string,
+      extension: string,
+  },
+  name: string,
+  id: number,
+  description: string,
+}
+
 const Home: NextPage = () => {
   const [size, setSize] = useState([1366, 768]);
   const [page, setPage] = useState('');
-  const [newData, setNewData] = useState({});
+  const [newData, setNewData] = useState<DataProps>();
 
   function useWindowSize() {
     useLayoutEffect(() => {
@@ -34,7 +44,7 @@ const Home: NextPage = () => {
     setPage(myParam);
 
     const { 'data-character': data } = parseCookies();
-    setNewData(data);
+    setNewData(JSON.parse(data));
   }, [])
 
   return (
@@ -97,7 +107,7 @@ const Home: NextPage = () => {
               )
             : page === 'info-characters' ?
              (
-              <InfoCharacter dataCharacter={newData}/>
+              <InfoCharacter />
              )
             : null
           }
