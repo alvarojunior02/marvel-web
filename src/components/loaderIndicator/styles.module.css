@@ -1,0 +1,21 @@
+.Container {
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 35%;
+}
+
+.Spinner {
+  border: 2px solid rgba(0, 0, 0, .1);
+  border-radius: 50%;
+  border-left-color: black;
+  height: 100px;
+  width: 100px;
+  animation: spin 1s linear infinite;
+  margin-left: 15%;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
