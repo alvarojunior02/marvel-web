@@ -38,7 +38,6 @@ export default function InfoComic(): JSX.Element {
 
     function getComcisByLink(link: string) {
         try{
-            
             axios.get(`${link}?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`)
                 .then(response => {    
                     setData(response.data.data.results[0]);
@@ -55,7 +54,12 @@ export default function InfoComic(): JSX.Element {
     useEffect(() => {
         try {
             const linkComic = JSON.parse(localStorage?.getItem('link-comic') || '');
-            getComcisByLink(linkComic);
+            const linkSplit = linkComic.split('http');
+            if(linkSplit[0] === 's') {
+                getComcisByLink("http".concat(linkSplit[1]));
+            } else {
+                getComcisByLink("https".concat(linkSplit[1]));
+            }
         } catch (e) {
             console.log(e);
         }
@@ -109,13 +113,6 @@ export default function InfoComic(): JSX.Element {
                 </div>
             </div>
             <div className={styles.containerButtons}>
-                <a href={`/?page=info-character`}>
-                    <button
-                        className={styles.clickImage}
-                    >
-                        <p>Voltar para Personagem</p>
-                    </button>
-                </a>
                 <a href={`/?page=comics`}>
                     <button
                         className={styles.clickImage}

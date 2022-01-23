@@ -84,7 +84,6 @@ export default function InfoCharacter(): JSX.Element {
     return (
         <>
             <div className={styles.container}>
-                {console.log(data)}
                 <div className={styles.body}>
                     <div className={
                         size[0] > 720 ?
