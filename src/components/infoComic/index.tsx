@@ -55,10 +55,11 @@ export default function InfoComic(): JSX.Element {
         try {
             const linkComic = JSON.parse(localStorage?.getItem('link-comic') || '');
             const linkSplit = linkComic.split('http');
-            if(linkSplit[0] === 's') {
-                getComcisByLink("http".concat(linkSplit[1]));
+            const rightLink = linkSplit[1];
+            if(rightLink[0] === 's') {
+                getComcisByLink("http".concat(rightLink));
             } else {
-                getComcisByLink("https".concat(linkSplit[1]));
+                getComcisByLink("https".concat(rightLink));
             }
         } catch (e) {
             console.log(e);
