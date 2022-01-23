@@ -66,6 +66,12 @@
   text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
 }
 
+.imageCapa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .footer {
   padding-top: 20px;
   margin-bottom: -25px;

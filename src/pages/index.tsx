@@ -5,13 +5,17 @@ import type { NextPage } from 'next'
 import Image from 'next/image'
 import Link from 'next/link';
 import styles from '../styles/Home.module.css'
-import marvelLogo from '../../public/images/marvel-background.png';
-import InfoCharacter from '../components/infoCharacter'
 import { parseCookies } from 'nookies';
-import InfoComic from '../components/infoComic';
 
+// import components
 import ContainerCharacters from '../components/containerCharacters';
 import ContainerComics from '../components/containerComics';
+import InfoCharacter from '../components/infoCharacter';
+import InfoComic from '../components/infoComic';
+
+// import images from paste public
+import capa from '../../public/images/capa-alvaro.png';
+import marvelLogo from '../../public/images/marvel-background.png';
 
 type DataProps = {
   thumbnail: {
@@ -111,6 +115,14 @@ const Home: NextPage = () => {
                   <p className={styles.textDescription}>
                     Para iniciar, clique em alguma opção na barra acima.
                   </p>
+                  <div className={styles.imageCapa}>
+                    <Image
+                        src={capa}
+                        width="1000px"
+                        height="200px"
+                        quality='100'
+                    />
+                  </div>
                 </>
               )
             : page === 'characters' ?

@@ -109,11 +109,18 @@ export default function InfoComic(): JSX.Element {
                 </div>
             </div>
             <div className={styles.containerButtons}>
+                <a href={`/?page=info-character`}>
+                    <button
+                        className={styles.clickImage}
+                    >
+                        <p>Voltar para Personagem</p>
+                    </button>
+                </a>
                 <a href={`/?page=comics`}>
                     <button
                         className={styles.clickImage}
                     >
-                        <p>Voltar</p>
+                        <p>Voltar para Comics</p>
                     </button>
                 </a>
             </div>
