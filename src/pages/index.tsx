@@ -105,7 +105,7 @@ const Home: NextPage = () => {
             page === '' ?
               (
                 <>
-                  <h1 className={styles.textTitle}>Seja Bem-Vindo</h1>
+                  <h1 className={styles.textTitle}>Seja Bem-Vindo(a)</h1>
                   <p className={styles.textDescription}>
                     Essa aplicação foi criada com objetivo de aprimorar os conhecimentos do autor.
                   </p>
@@ -113,16 +113,11 @@ const Home: NextPage = () => {
                     Tecnologias usadas: React, TypeScript, Next.
                   </p>
                   <p className={styles.textDescription}>
+                    | Status da Aplicação: em desenvolvimento. |
+                  </p>
+                  <p className={styles.textDescription}>
                     Para iniciar, clique em alguma opção na barra acima.
                   </p>
-                  <div className={styles.imageCapa}>
-                    <Image
-                        src={capa}
-                        width="1000px"
-                        height="200px"
-                        quality='100'
-                    />
-                  </div>
                 </>
               )
             : page === 'characters' ?

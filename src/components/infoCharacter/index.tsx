@@ -131,7 +131,7 @@ export default function InfoCharacter(): JSX.Element {
                     data?.comics?.available || -1 > 0 ?
                         (
                             data?.comics?.items
-                                .map((item: {resourceURI: string, name: string}) => {
+                                .map((item: any) => {
                                     return (
                                         <>
                                             <div>
@@ -157,7 +157,7 @@ export default function InfoCharacter(): JSX.Element {
                     data?.urls.length || -1 > 0 ?
                         (
                             data?.urls
-                                .map((item: ItemProps) => {
+                                .map((item: any) => {
                                     return (
                                         <>
                                             <div>
