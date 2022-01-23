@@ -1,0 +1,31 @@
+.container {
+    border: 2px solid black;
+    border-radius: 30px;
+    background-color: white;
+    width: 310px;
+    height: 440px;
+    margin: 5px;
+}
+
+.container:hover {
+    box-shadow: 5px 5px 5px black;
+}
+
+.titleComic {
+    font-size: 16px;
+    text-align: center;
+}
+
+.containerImage {
+    margin-bottom: 20px;
+}
+
+.clickImage {
+    padding: 0;
+    cursor: pointer;
+}
+
+.clickForMore {
+    font-size: 14px;
+    text-align: center;
+}

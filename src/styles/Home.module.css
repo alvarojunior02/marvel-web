@@ -24,6 +24,12 @@
   border: 2px solid white;
 }
 
+.navBar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .navBar nav a {
   background-color: #ec1d24;
   border: none;

@@ -1,0 +1,47 @@
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.containerInfos {
+    max-width: 500px;
+    margin: 20px
+}
+
+.textName {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+.textDescription {
+    font-size: 16px;
+    text-align: justify;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+.containerButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.clickImage {
+    padding: 0;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border-radius: 30px;
+    border: 1px solid black;
+    background-color: white;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+  
+  

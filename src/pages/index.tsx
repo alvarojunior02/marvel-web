@@ -6,9 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import marvelLogo from '../../public/images/marvel-background.png';
-import ContainerCharacters from '../components/containerCharacters';
 import InfoCharacter from '../components/infoCharacter'
 import { parseCookies } from 'nookies';
+import InfoComic from '../components/infoComic';
+
+import ContainerCharacters from '../components/containerCharacters';
+import ContainerComics from '../components/containerComics';
 
 type DataProps = {
   thumbnail: {
@@ -84,6 +87,11 @@ const Home: NextPage = () => {
               >
                 <p>Personagens</p>
               </a>
+              <a
+                href='/?page=comics'
+              >
+                <p>Comics</p>
+              </a>
             </nav>
           </div>
         </div>
@@ -109,10 +117,18 @@ const Home: NextPage = () => {
               (
                 <ContainerCharacters />
               )
-            : page === 'info-characters' ?
-             (
-              <InfoCharacter />
-             )
+            : page === 'info-character' ?
+              (
+                <InfoCharacter />
+              )
+            : page === 'comics' ?
+              (
+                <ContainerComics />
+              )
+            : page === 'info-comic' ?
+              (
+                <InfoComic />
+              )
             : null
           }
       </div>

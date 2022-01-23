@@ -5,29 +5,22 @@ import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import axios from 'axios';
 import api from "../../services/api";
 
-import Character from "../character";
 import LoaderIndicator from "../loaderIndicator";
+import Comic from '../comic';
 
-export default function ContainerCharacters(): JSX.Element {
+export default function ContainerComics(): JSX.Element {
 
     type DataProps = {
         thumbnail: {
             path: string,
             extension: string,
         },
-        name: string,
+        title: string,
         id: number,
         description: string,
-        comics: {
-            available: number,
-            items: {
-                name: string,
-                resourceURI: string,
-            },
-        },
     }
 
-    const [characters, setCharacters] = useState([]);
+    const [comics, setComics] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [contador, setContador] = useState(1);
 
@@ -47,19 +40,19 @@ export default function ContainerCharacters(): JSX.Element {
         });
     };
 
-    function filterCharacters(character: { name: string; }) {
+    function filterCharacters(comic: { title: string; }) {
         return(
-            character.name.toUpperCase().includes(searchTerm.toUpperCase())
+            comic.title.toUpperCase().includes(searchTerm.toUpperCase())
         );
     }
 
-    function getCharacters() {
+    function getComics() {
         try {
             axios.get(
-                `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
+                `${baseURL}/comics?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
             )
             .then(response => { 
-                setCharacters(response.data.data.results);
+                setComics(response.data.data.results);
             })
             .catch(error => console.log(error));
         } catch (err) {
@@ -67,17 +60,17 @@ export default function ContainerCharacters(): JSX.Element {
         }
     }
 
-    function moreCharacters(count: number) {
+    function moreComics(count: number) {
         try{
             const offset = count*20;
-            api.get('/characters', {
+            api.get('/comics', {
                     params: {
                         offset,
                     }
                 }
             )
             .then(response => {    
-                setCharacters(characters.concat(response.data.data.results));
+                setComics(comics.concat(response.data.data.results));
             })
             .catch(
                 error => console.log(error)
@@ -88,7 +81,7 @@ export default function ContainerCharacters(): JSX.Element {
     }
 
     useEffect(() => {
-        getCharacters();
+        getComics();
     }, []);
 
     return(
@@ -102,19 +95,19 @@ export default function ContainerCharacters(): JSX.Element {
                 />      
             </div>
             <div className={styles.container}>
-                <div id="1" className={styles.containerCharacters}>
+                <div id="1" className={styles.containerComics}>
                     { 
-                        characters.length === 0 ?
+                        comics.length === 0 ?
                             (
                                 <LoaderIndicator />
                             )
                         :
                             (   
-                            characters
+                            comics
                                 .filter(character => filterCharacters(character))
                                 .map((data: DataProps) => {
                                     return (
-                                        <Character 
+                                        <Comic 
                                             id={data?.id}
                                         />
                                     );
@@ -124,7 +117,7 @@ export default function ContainerCharacters(): JSX.Element {
                 </div>
                 <div className={styles.containerButtons}>
                     <button
-                        disabled={characters.length === 0 ? true : false}
+                        disabled={comics.length === 0 ? true : false}
                         type="button"
                         className={styles.button}
                         onClick={() => {
@@ -134,18 +127,18 @@ export default function ContainerCharacters(): JSX.Element {
                         Inicio
                     </button>
                     <button
-                        disabled={characters.length === 0 ? true : false}
+                        disabled={comics.length === 0 ? true : false}
                         type="button"
                         className={styles.button}
                         onClick={() => {
-                            moreCharacters(contador);
+                            moreComics(contador);
                             setContador(contador + 1);
                         }}
                     >
-                        + Personagens
+                        + Comics
                     </button>
                     <button
-                        disabled={characters.length === 0 ? true : false}
+                        disabled={comics.length === 0 ? true : false}
                         type="button"
                         className={styles.button}
                         onClick={() => {

@@ -10,14 +10,86 @@
 }
 
 .textName {
-    font-size: 5.5vh;
+    font-size: 20px;
     text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
 }
 
 .textDescription {
-    font-size: 4.5vh;
+    font-size: 16px;
     text-align: justify;
+    color: white;
+    text-shadow: 2px 2px 2px black;
 }
+
+.containerButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.clickImage {
+    padding: 0;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border-radius: 30px;
+    border: 1px solid black;
+    background-color: white;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerComics {
+    text-align: center;
+}
+
+.containerComics h2 {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+.containerComics div p {
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+.containerUrls {
+    text-align: center;
+}
+
+.containerComics div a p:hover {
+    text-decoration: underline;
+}
+
+.containerUrls h2 {
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+}
+
+.containerUrls div a p {
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 2px black;
+    margin: 25px
+}
+
+.containerUrls div a p:hover {
+    text-decoration: underline;
+}
+
+
+
+
 
   
   

@@ -5,22 +5,16 @@ import styles from './styles.module.css';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
+import { baseURL } from '../../config/consts';
 
 type CharacterProps = {
     thumbnail: {
         path: string,
         extension: string,
     },
-    name: string,
+    title: string,
     id: number,
     description: string,
-    comics: {
-        available: number,
-        items: {
-            name: string,
-            resourceURI: string,
-        },
-    },
 }
 
 type ThisProps = {
@@ -29,11 +23,11 @@ type ThisProps = {
 
 export default function Character({id}: ThisProps): JSX.Element {
     const [data, setData] = useState<CharacterProps>();
-    const [imageCharacter, setImageCharacter] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
+    const [imageComic, setImageComic] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
 
-    function getCharacterById(id: number) {
+    function getComicById(id: number) {
         try{
-            api.get(`/characters/${id}`)
+            api.get(`/comics/${id}`)
             .then(response => {    
                 setData(response.data.data.results[0]);
             })
@@ -46,32 +40,32 @@ export default function Character({id}: ThisProps): JSX.Element {
     }
 
     useEffect(() => {
-        getCharacterById(id);
+        getComicById(id);
     }, []);
 
     useEffect(() => {
-        setImageCharacter(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
+        setImageComic(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
     }, [data]);
 
     return(
         <>  
             <div className={styles.container}>
                 <div>
-                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
+                    <h2 className={styles.titleComic}>{data?.title}</h2>
                 </div>
                 <div className={styles.containerImage}>
                     <a
                         className={styles.clickImage}
-                        href={`/?page=info-character`}
+                        href={`/?page=info-comic`}
                         onClick={() => {
-                            localStorage.setItem('id-character', JSON.stringify(data?.id));
+                            localStorage.setItem('link-comic', JSON.stringify(baseURL + "/comics/" + data?.id));
                         }}
                     >
                         <Image
-                            loader={() => imageCharacter}
+                            loader={() => imageComic}
                             unoptimized={true}
-                            src={imageCharacter} 
-                            alt={data?.name}
+                            src={imageComic} 
+                            alt={data?.title}
                             height={300} 
                             width={300}
                         />
