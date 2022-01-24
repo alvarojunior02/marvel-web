@@ -1,0 +1,31 @@
+.footer {
+    padding-top: 20px;
+    margin-bottom: -25px;
+    background: #ec1d24;
+    bottom: 0;
+    width: 100%;
+}
+
+.containerContacts {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.footer div a {
+    color: white;
+    font-size: 20px;
+    text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
+    margin-left: 20px;
+}
+
+.footer div a:hover {
+    text-decoration: underline;
+}
+
+.textCopyright {
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
+}

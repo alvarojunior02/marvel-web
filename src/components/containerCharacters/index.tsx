@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import styles from './styles.module.css';
 import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import axios from 'axios';
@@ -33,6 +33,20 @@ export default function ContainerCharacters(): JSX.Element {
     const [characters, setCharacters] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [contador, setContador] = useState(1);
+    const [size, setSize] = useState([0, 0]);
+
+    function useWindowSize() {
+        useLayoutEffect(() => {
+            function updateSize() {
+                setSize([window.innerWidth, window.innerHeight]);
+            }
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }, []);
+    }
+
+    useWindowSize();
 
     const handleScrollToTop = () => {
         window?.scrollTo({
@@ -112,6 +126,7 @@ export default function ContainerCharacters(): JSX.Element {
         <>
             <div className={styles.search}>
                 <input 
+                    style={size[0] > 720 ? {width: '400px'} : {width: '70%'}}
                     type="search" 
                     placeholder="Ex: Spider-Man"
                     value={searchTerm}

@@ -111,17 +111,16 @@ export default function Character({id}: ThisProps): JSX.Element {
 }
 
 const ContainerComics = styled.div`
-    border: 2px solid black;
     border-radius: 30px;
     padding: 5px;
-    background-color: #ec1d24;
+    background-color: white;
     width: 280px;
     height: 380px;
     max-width: 300px;
     max-height: 380px;
     margin: 5px;
     overflow: hidden;
-    color: white;
+    color: black;
 
     &:hover {
         div#containerImage {

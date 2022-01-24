@@ -12,6 +12,8 @@ import ContainerCharacters from '../components/containerCharacters';
 import ContainerComics from '../components/containerComics';
 import InfoCharacter from '../components/infoCharacter';
 import InfoComic from '../components/infoComic';
+import NavBarWeb from '../components/navBarWeb';
+import Footer from '../components/footer';
 
 // import images from paste public
 import capa from '../../public/images/capa-alvaro.png';
@@ -60,46 +62,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.containerHeader}>
-          { 
-            size[0] > 720 ? 
-              (
-                <div className={styles.containerImage}> 
-                  <a
-                    href='/'
-                    onClick={() => {
-                      if (page !== '') {
-                        setPage('');
-                      }
-                    }}
-                  >
-                    <Image 
-                      src={marvelLogo}
-                      width="100vw"
-                      height="50vh"
-                    />
-                  </a>
-                    
-                </div>
-              ) : null
-          }
-          <div className={styles.navBar}>
-            <nav>
-              <a
-                href='/?page=characters'
-              >
-                <p>Personagens</p>
-              </a>
-              <a
-                href='/?page=comics'
-              >
-                <p>Comics</p>
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <NavBarWeb />
       <div className={styles.body}>
           {
             page === '' ?
@@ -139,32 +102,7 @@ const Home: NextPage = () => {
             : null
           }
       </div>
-      <footer className={styles.footer}>
-        <div className={styles.containerContacts}>   
-          <span>
-            <Link href="https://www.linkedin.com/in/alvaro-junior-831299183/">
-              <a target="_blank">
-                LinkedIn
-              </a>
-            </Link>
-          </span>
-          <span>
-            <Link href="https://github.com/alvarojunior02/">
-              <a target="_blank">
-                GitHub
-              </a>
-            </Link>
-          </span>
-          <span>
-            <Link href="https://developer.marvel.com/">
-              <a target="_blank">
-                Marvel API
-              </a>
-            </Link>
-          </span>
-        </div>
-        <p className={styles.textCopyright}>© 2022 Copyright - Alvaro Junior</p>
-      </footer>
+      <Footer />
     </div>
   )
 }

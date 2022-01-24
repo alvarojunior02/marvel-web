@@ -1,7 +1,6 @@
 .Container {
   align-items: center;
   justify-content: flex-start;
-  margin-left: 35%;
 }
 
 .Spinner {
@@ -11,7 +10,6 @@
   height: 100px;
   width: 100px;
   animation: spin 1s linear infinite;
-  margin-left: 15%;
 }
 
 @keyframes spin {
