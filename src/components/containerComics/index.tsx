@@ -1,12 +1,16 @@
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import styles from './styles.module.css';
 import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import axios from 'axios';
 import api from "../../services/api";
+import Image from "next/image";
 
 import LoaderIndicator from "../loaderIndicator";
 import Comic from '../comic';
+import Lupa from '../../../public/images/magnifier.png';
 
 export default function ContainerComics(): JSX.Element {
 
@@ -23,6 +27,20 @@ export default function ContainerComics(): JSX.Element {
     const [comics, setComics] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [contador, setContador] = useState(1);
+    const [size, setSize] = useState([0, 0]);
+
+    function useWindowSize() {
+        useLayoutEffect(() => {
+            function updateSize() {
+                setSize([window.innerWidth, window.innerHeight]);
+            }
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }, []);
+    }
+
+    useWindowSize();
 
     const handleScrollToTop = () => {
         window?.scrollTo({
@@ -87,11 +105,26 @@ export default function ContainerComics(): JSX.Element {
         <>
             <div className={styles.search}>
                 <input 
+                    style={size[0] > 720 ? {width: '400px'} : {width: '70%'}}
                     type="search" 
-                    placeholder="Pesquisar por nome"
+                    placeholder="Ex: Spider-Man"
                     value={searchTerm}
-                    onChange={event => setSearchTerm(event.target.value)}
-                />      
+                    onChange={event => {
+                        setSearchTerm(event.target.value);
+                    }}
+                />
+                <button
+                    className={styles.buttonSearch}
+                    onClick={() => {
+                        
+                    }}
+                >
+                    <Image
+                        src={Lupa}
+                        width={40}
+                        height={40}
+                    />
+                </button>      
             </div>
             <div className={styles.containerButtons}>
                 <button

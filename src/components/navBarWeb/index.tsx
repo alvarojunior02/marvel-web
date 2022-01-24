@@ -7,8 +7,8 @@ import Image from 'next/image'
 
 // images
 import marvelLogo from '../../../public/images/marvel.png'
-import iconeSuperhero from '../../../public/images/iconeSuperhero.png';
-import iconeComics from '../../../public/images/iconeComics.png';
+import iconeSuperhero2 from '../../../public/images/iconSuperhero.png';
+import iconeComics from '../../../public/images/iconComics.png';
 
 export default function Footer(): JSX.Element {
     const [size, setSize] = useState([0, 0]);
@@ -53,7 +53,7 @@ export default function Footer(): JSX.Element {
                             href='/?page=characters'
                         >
                             <Image 
-                                src={iconeSuperhero}
+                                src={iconeSuperhero2}
                                 width="40"
                                 height="40"
                             />

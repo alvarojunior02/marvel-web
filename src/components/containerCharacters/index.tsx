@@ -103,7 +103,6 @@ export default function ContainerCharacters(): JSX.Element {
 
     function searchCharacterByName(name: string) {
         try{
-            console.log( `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}&name=${name}`);
             axios.get(
                 `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}&name=${name}`,
             )
@@ -130,7 +129,9 @@ export default function ContainerCharacters(): JSX.Element {
                     type="search" 
                     placeholder="Ex: Spider-Man"
                     value={searchTerm}
-                    onChange={event => setSearchTerm(event.target.value)}
+                    onChange={event => {
+                        setSearchTerm(event.target.value);
+                    }}
                 />
                 <button
                     className={styles.buttonSearch}

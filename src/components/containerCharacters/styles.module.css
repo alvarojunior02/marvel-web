@@ -53,5 +53,5 @@
 }
 
 .button:hover{
-    background-color: #ec1d24;
+    opacity: 0.5;
 }

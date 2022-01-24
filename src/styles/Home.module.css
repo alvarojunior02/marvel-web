@@ -1,27 +1,32 @@
 .container {
-  margin: 0;
+  margin: -10px;
 }
 
 .body {
   background-color: white;
+  color: black;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .textTitle {
-  color: white;
-  text-align: center;
   font-size: 30px;
-  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
 }
 
 .textDescription {
-  color:white;
-  text-align: center;
   font-size: 20px;
-  text-shadow:#000 1px -1px, #000 -1px 1px, #000 1px 1px, #000 -1px -1px;
-}
-
-.imageCapa {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.containerImages {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
 }

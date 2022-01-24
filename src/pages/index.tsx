@@ -16,8 +16,10 @@ import NavBarWeb from '../components/navBarWeb';
 import Footer from '../components/footer';
 
 // import images from paste public
-import capa from '../../public/images/capa-alvaro.png';
-import marvelLogo from '../../public/images/marvel-background.png';
+import gifComputer from '../../public/images/computer.gif'
+import iconReact from '../../public/images/iconReact.png';
+import iconTypescript from '../../public/images/iconTypescript.png';
+import iconNext from '../../public/images/iconNext.png';
 
 type DataProps = {
   thumbnail: {
@@ -70,16 +72,45 @@ const Home: NextPage = () => {
                 <>
                   <h1 className={styles.textTitle}>Seja Bem-Vindo(a)</h1>
                   <p className={styles.textDescription}>
-                    Essa aplicação foi criada com objetivo de aprimorar os conhecimentos do autor.
+                    Site criado para estudos. Não é nada voltado ao mercado.
                   </p>
                   <p className={styles.textDescription}>
-                    Tecnologias usadas: React, TypeScript, Next.
+                    Tecnologias usadas:
                   </p>
+                  <div 
+                    style={size[0] > 720 ? {width: '300px'} : {width: '90%'}}
+                    className={styles.containerImages}
+                  > 
+                    <a target="_blank" href="https://pt-br.reactjs.org/" rel="noreferrer">
+                      <Image
+                        src={iconReact}
+                        width={40}
+                        height={40}
+                      />
+                    </a>
+                    <a target="_blank" href="https://www.typescriptlang.org/" rel="noreferrer">
+                      <Image
+                        src={iconTypescript}
+                        width={40}
+                        height={40}
+                      />
+                    </a>
+                    <a target="_blank" href="https://nextjs.org/" rel="noreferrer">
+                      <Image
+                        src={iconNext}
+                        width={40}
+                        height={40}
+                      />
+                    </a>
+                  </div>
                   <p className={styles.textDescription}>
-                    | Status da Aplicação: em desenvolvimento. |
-                  </p>
-                  <p className={styles.textDescription}>
-                    Para iniciar, clique em alguma opção na barra acima.
+                    Status do Site: em desenvolvimento
+                    <Image
+                      className={styles.gifComputer} 
+                      src={gifComputer}
+                      width={40}
+                      height={40}
+                    />
                   </p>
                 </>
               )
