@@ -131,7 +131,6 @@ const ContainerCharacter = styled.div`
     margin: 5px;
     overflow: hidden;
     color: white;
-    margin-left: 25%;
 
     &:hover {
         div#containerImage {
