@@ -94,17 +94,17 @@ export default function ContainerComics(): JSX.Element {
                 />      
             </div>
             <div className={styles.containerButtons}>
-                    <button
-                        disabled={comics.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            handleScrollToBottom();
-                        }}
-                    >
-                        Fim
-                    </button>
-                </div>
+                <button
+                    disabled={comics.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        handleScrollToBottom();
+                    }}
+                >
+                    Fim
+                </button>
+            </div>
             <div className={styles.container}>
                 <div id="1" className={styles.containerComics}>
                     { 
@@ -126,29 +126,29 @@ export default function ContainerComics(): JSX.Element {
                             )  
                     }
                 </div>
-                <div className={styles.containerButtons}>
-                    <button
-                        disabled={comics.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            handleScrollToTop();
-                        }}
-                    >
-                        Inicio
-                    </button>
-                    <button
-                        disabled={comics.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            moreComics(contador);
-                            setContador(contador + 1);
-                        }}
-                    >
-                        + Comics
-                    </button>
-                </div>
+            </div>
+            <div className={styles.containerButtons}>
+                <button
+                    disabled={comics.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        handleScrollToTop();
+                    }}
+                >
+                    Inicio
+                </button>
+                <button
+                    disabled={comics.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        moreComics(contador);
+                        setContador(contador + 1);
+                    }}
+                >
+                    + Comics
+                </button>
             </div>
         </>
     );

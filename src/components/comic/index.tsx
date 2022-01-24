@@ -101,9 +101,6 @@ export default function Character({id}: ThisProps): JSX.Element {
                                 <div>
                                     <h2 className={styles.titleComic}>{data?.title}</h2>
                                 </div>
-                                <div className={styles.containerInformations}>
-                                    <p className={styles.description}> {data?.description} </p>
-                                </div>
                             </div>
                         </div>
                     )
@@ -119,9 +116,9 @@ const ContainerComics = styled.div`
     padding: 5px;
     background-color: #ec1d24;
     width: 280px;
-    height: 300px;
+    height: 380px;
     max-width: 300px;
-    max-height: 300px;
+    max-height: 380px;
     margin: 5px;
     overflow: hidden;
     color: white;

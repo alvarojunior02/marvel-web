@@ -107,9 +107,6 @@ export default function Character({id}: ThisProps): JSX.Element {
                                 <div>
                                     <h2 className={styles.nameCharacter}>{data?.name}</h2>
                                 </div>
-                                <div className={styles.containerInformations}>
-                                    <p className={styles.description}> {data?.description} </p>
-                                </div>
                             </div>
                         </div>
                     )
@@ -124,9 +121,9 @@ const ContainerCharacter = styled.div`
     border-radius: 30px;
     padding: 5px;
     background-color: #ec1d24;
-    width: 300px;
+    width: 280px;
     height: 300px;
-    max-width: 300px;
+    max-width: 280px;
     max-height: 300px;
     margin: 5px;
     overflow: hidden;
