@@ -40,6 +40,7 @@ export default function InfoCharacter(): JSX.Element {
     const [data, setData] = useState<InfoCharacterProps>();
     const [imagemSrc, setImagemSrc] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
     const [size, setSize] = useState([1366, 768]);
+    const [comicLink, setComicLink] = useState('');
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -97,12 +98,13 @@ export default function InfoCharacter(): JSX.Element {
                     }>
                         <div className={styles.containerImage}>
                             <Image
+                                className={styles.image}
                                 loader={() => imagemSrc}
                                 unoptimized={true}
                                 src={imagemSrc} 
                                 alt={data?.name}
-                                height={500} 
-                                width={500}
+                                height={400} 
+                                width={400}
                             />
                         </div>
                         <div className={styles.containerInfos}>
@@ -126,29 +128,41 @@ export default function InfoCharacter(): JSX.Element {
             </div>
             <div className={styles.containerComics}>
                 <h2>Comics do Personagem: </h2>
-                {
-                    data?.comics?.available || -1 > 0 ?
-                        (
-                            data?.comics?.items
-                                .map((item: any) => {
-                                    return (
-                                        <>
-                                            <div>
-                                                <a 
-                                                    href="/?page=info-comic"
-                                                    onClick={() => {
-                                                        localStorage.setItem('link-comic', JSON.stringify(item?.resourceURI))
-                                                    }}
+                {console.log(data?.comics?.items)}
+                <div className={styles.containerComicsSelect}>
+                    {
+                        data?.comics?.available || -1 > 0 ?
+                            (
+                                <select
+                                    className={styles.Uf}
+                                    onChange={(newEvent) => {
+                                        setComicLink(newEvent.target.value);
+                                    }}
+                                >
+                                    {
+                                        data?.comics?.items.map((item: any) => {
+                                            return (
+                                                <option
+                                                    value={item?.resourceURI}
                                                 >
-                                                    <p>{item?.name}</p> 
-                                                </a> 
-                                            </div>
-                                        </>    
-                                    )
-                                })
-                        )
-                    : null
-                }
+                                                    {item?.name}
+                                                </option>
+                                            );
+                                        })
+                                    
+                                    }
+                                </select>
+                            )
+                        : null
+                    }
+                    <button
+                        onClick={() => {
+                            comicLink
+                        }}
+                    >
+                        Ir
+                    </button>
+                </div>
             </div>
             <div className={styles.containerUrls}>
                 <h2>URLs Uteis: </h2>
@@ -174,7 +188,7 @@ export default function InfoCharacter(): JSX.Element {
             <div className={styles.containerButtons}>
                 <a href={`/?page=characters`}>
                     <button
-                        className={styles.clickImage}
+                        className={styles.backButton}
                     >
                         <p>Voltar</p>
                     </button>

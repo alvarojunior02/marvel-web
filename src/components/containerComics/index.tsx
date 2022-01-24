@@ -25,8 +25,7 @@ export default function ContainerComics(): JSX.Element {
     const [contador, setContador] = useState(1);
 
     const handleScrollToTop = () => {
-        let element = document.getElementById('1');
-        element?.scrollTo({
+        window?.scrollTo({
           top: 0,
           behavior: 'smooth',
         });
@@ -34,7 +33,7 @@ export default function ContainerComics(): JSX.Element {
 
     const handleScrollToBottom = () => {
         let element = document.getElementById('1');
-        element?.scrollTo({
+        window?.scrollTo({
             top: element?.scrollHeight,
             behavior: 'smooth',
         });
@@ -94,6 +93,18 @@ export default function ContainerComics(): JSX.Element {
                     onChange={event => setSearchTerm(event.target.value)}
                 />      
             </div>
+            <div className={styles.containerButtons}>
+                    <button
+                        disabled={comics.length === 0 ? true : false}
+                        type="button"
+                        className={styles.button}
+                        onClick={() => {
+                            handleScrollToBottom();
+                        }}
+                    >
+                        Fim
+                    </button>
+                </div>
             <div className={styles.container}>
                 <div id="1" className={styles.containerComics}>
                     { 
@@ -136,16 +147,6 @@ export default function ContainerComics(): JSX.Element {
                         }}
                     >
                         + Comics
-                    </button>
-                    <button
-                        disabled={comics.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            handleScrollToBottom();
-                        }}
-                    >
-                        Fim
                     </button>
                 </div>
             </div>

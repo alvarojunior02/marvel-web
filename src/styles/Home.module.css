@@ -24,7 +24,7 @@
   border: 2px solid white;
 }
 
-.navBar {
+.navBar nav {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -33,6 +33,7 @@
 .navBar nav a {
   background-color: #ec1d24;
   border: none;
+  margin: 10px;
 }
 
 .navBar nav a p {
@@ -47,7 +48,7 @@
 }
 
 .body {
-  background-color: #F84A4E;
+  background-color: white;
   border-top: 2px solid black;
   border-bottom: 2px solid black;
 }

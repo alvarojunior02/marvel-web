@@ -1,10 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 //import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import api from '../../services/api';
+import styled from 'styled-components';
 
 type CharacterProps = {
     thumbnail: {
@@ -29,7 +32,21 @@ type ThisProps = {
 
 export default function Character({id}: ThisProps): JSX.Element {
     const [data, setData] = useState<CharacterProps>();
+    const [size, setSize] = useState([0, 0]);
     const [imageCharacter, setImageCharacter] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
+
+    function useWindowSize() {
+        useLayoutEffect(() => {
+            function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+            }
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }, []);
+    }
+
+    useWindowSize();
 
     function getCharacterById(id: number) {
         try{
@@ -54,33 +71,76 @@ export default function Character({id}: ThisProps): JSX.Element {
     }, [data]);
 
     return(
-        <>  
-            <div className={styles.container}>
-                <div>
-                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
-                </div>
-                <div className={styles.containerImage}>
-                    <a
-                        className={styles.clickImage}
-                        href={`/?page=info-character`}
-                        onClick={() => {
-                            localStorage.setItem('id-character', JSON.stringify(data?.id));
-                        }}
-                    >
-                        <Image
-                            loader={() => imageCharacter}
-                            unoptimized={true}
-                            src={imageCharacter} 
-                            alt={data?.name}
-                            height={300} 
-                            width={300}
-                        />
-                    </a>
-                    <p className={styles.clickForMore}>Clique na imagem para mais informações</p>
-                </div>
-                <div className={styles.containerInformations}>
-                </div>
-            </div>
+        <>     
+            <a
+                className={styles.clickImage}
+                href={`/?page=info-character`}
+                onClick={() => {
+                    localStorage.setItem('id-character', JSON.stringify(data?.id));
+                }}
+            >
+                {  
+                    size[0] > 720 ? (
+                        <ContainerCharacter>
+                            <div id="containerImage" className={styles.containerImage}>
+                                <img
+                                    id="image" 
+                                    className={styles.image}
+                                    src={imageCharacter} 
+                                />
+                                <div>
+                                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
+                                </div>
+                                <div className={styles.containerInformations}>
+                                    <p className={styles.description}> {data?.description} </p>
+                                </div>
+                            </div>
+                        </ContainerCharacter>
+                    ) : (
+                        <div className={styles.container}>
+                            <div id="containerImage" className={styles.containerImage}>
+                                <img
+                                    id="image" 
+                                    className={styles.image}
+                                    src={imageCharacter} 
+                                />
+                                <div>
+                                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
+                                </div>
+                                <div className={styles.containerInformations}>
+                                    <p className={styles.description}> {data?.description} </p>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            </a>
         </>
     );
 }
+
+const ContainerCharacter = styled.div`
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 5px;
+    background-color: #ec1d24;
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    margin: 5px;
+    overflow: hidden;
+    color: white;
+    margin-left: 25%;
+
+    &:hover {
+        div#containerImage {
+            height: 100px;
+            transition: all 1s;
+        }
+        div#containerImage img {
+            height: 100px;
+            transition: all 1s;
+        }
+    }
+`;

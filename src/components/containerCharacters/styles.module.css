@@ -5,20 +5,24 @@
 }
 
 .search input {
-    width: 600px;
+    width: 70%;
     height: 40px;
     border-radius: 30px;
     border: 2px solid black;
     padding: 5px;
 }
 
+.buttonSearch {
+    border-radius: 50%;
+    margin-top: -5px;
+    cursor: pointer;
+}
+
 
 .container {
-    background-color: #F84A4E;
+    background-color: white;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     height: 100%;
 }
 
@@ -27,18 +31,15 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    max-height: 70vh;
-    width: 80%;
-    border: 2px solid black;
+    width: 100%;
 }
 
 .containerButtons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;;
+    align-items: center;
+    background-color: white;
 }
 
 .button {

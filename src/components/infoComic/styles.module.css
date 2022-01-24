@@ -2,25 +2,27 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    color: black;
+    margin-top: 25px;
 }
 
 .containerInfos {
-    max-width: 500px;
+    max-width: 300px;
     margin: 20px
 }
 
 .textName {
     font-size: 20px;
     text-align: center;
-    color: white;
-    text-shadow: 2px 2px 2px black;
 }
 
 .textDescription {
     font-size: 16px;
     text-align: justify;
-    color: white;
-    text-shadow: 2px 2px 2px black;
+}
+
+.image {
+    border-radius: 30px;
 }
 
 .containerButtons {
@@ -28,19 +30,26 @@
     justify-content: center;
 }
 
-.clickImage {
-    padding: 0;
+.backButton {
     cursor: pointer;
     width: 100px;
     height: 30px;
     border-radius: 30px;
     border: 1px solid black;
     background-color: white;
-    margin: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 20px;
 }
+
+.backButton:hover {
+    background-color: #ec1d24;
+    color: white;
+}
+
+
+
 
 
   

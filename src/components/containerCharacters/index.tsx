@@ -1,12 +1,15 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import axios from 'axios';
 import api from "../../services/api";
+import Image from 'next/image';
 
 import Character from "../character";
 import LoaderIndicator from "../loaderIndicator";
+import Lupa from '../../../public/images/magnifier.png';
 
 export default function ContainerCharacters(): JSX.Element {
 
@@ -32,8 +35,7 @@ export default function ContainerCharacters(): JSX.Element {
     const [contador, setContador] = useState(1);
 
     const handleScrollToTop = () => {
-        let element = document.getElementById('1');
-        element?.scrollTo({
+        window?.scrollTo({
           top: 0,
           behavior: 'smooth',
         });
@@ -41,23 +43,21 @@ export default function ContainerCharacters(): JSX.Element {
 
     const handleScrollToBottom = () => {
         let element = document.getElementById('1');
-        element?.scrollTo({
+        window?.scrollTo({
             top: element?.scrollHeight,
             behavior: 'smooth',
         });
     };
 
-    function filterCharacters(character: { name: string; }) {
-        return(
-            character.name.toUpperCase().includes(searchTerm.toUpperCase())
-        );
-    }
-
     function getCharacters() {
         try {
-            axios.get(
-                `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-            )
+            api.get('/characters', {
+                params: {
+                    ts: timestamp,
+                    apikey: publicKey,
+                    hash: hash,
+                }
+            })
             .then(response => { 
                 setCharacters(response.data.data.results);
             })
@@ -87,6 +87,23 @@ export default function ContainerCharacters(): JSX.Element {
         }
     }
 
+    function searchCharacterByName(name: string) {
+        try{
+            console.log( `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}&name=${name}`);
+            axios.get(
+                `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}&name=${name}`,
+            )
+            .then(response => {    
+                console.log(response);
+            })
+            .catch(
+                error => console.log(error)
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         getCharacters();
     }, []);
@@ -96,10 +113,34 @@ export default function ContainerCharacters(): JSX.Element {
             <div className={styles.search}>
                 <input 
                     type="search" 
-                    placeholder="Pesquisar por nome"
+                    placeholder="Ex: Spider-Man"
                     value={searchTerm}
                     onChange={event => setSearchTerm(event.target.value)}
-                />      
+                />
+                <button
+                    className={styles.buttonSearch}
+                    onClick={() => {
+                        searchCharacterByName(searchTerm);
+                    }}
+                >
+                    <Image
+                        src={Lupa}
+                        width="40"
+                        height="40"
+                    />
+                </button>      
+            </div>
+            <div className={styles.containerButtons}>
+                <button
+                    disabled={characters.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        handleScrollToBottom();
+                    }}
+                >
+                    Fim
+                </button>
             </div>
             <div className={styles.container}>
                 <div id="1" className={styles.containerCharacters}>
@@ -111,7 +152,6 @@ export default function ContainerCharacters(): JSX.Element {
                         :
                             (   
                             characters
-                                .filter(character => filterCharacters(character))
                                 .map((data: DataProps) => {
                                     return (
                                         <Character 
@@ -122,39 +162,29 @@ export default function ContainerCharacters(): JSX.Element {
                             )  
                     }
                 </div>
-                <div className={styles.containerButtons}>
-                    <button
-                        disabled={characters.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            handleScrollToTop();
-                        }}
-                    >
-                        Inicio
-                    </button>
-                    <button
-                        disabled={characters.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            moreCharacters(contador);
-                            setContador(contador + 1);
-                        }}
-                    >
-                        + Personagens
-                    </button>
-                    <button
-                        disabled={characters.length === 0 ? true : false}
-                        type="button"
-                        className={styles.button}
-                        onClick={() => {
-                            handleScrollToBottom();
-                        }}
-                    >
-                        Fim
-                    </button>
-                </div>
+            </div>
+            <div className={styles.containerButtons}>
+                <button
+                    disabled={characters.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        handleScrollToTop();
+                    }}
+                >
+                    Inicio
+                </button>
+                <button
+                    disabled={characters.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        moreCharacters(contador);
+                        setContador(contador + 1);
+                    }}
+                >
+                    + Personagens
+                </button>
             </div>
         </>
     );

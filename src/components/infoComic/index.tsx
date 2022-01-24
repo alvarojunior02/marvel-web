@@ -86,6 +86,7 @@ export default function InfoComic(): JSX.Element {
                     }>
                         <div className={styles.containerImage}>
                             <Image
+                                className={styles.image}
                                 loader={() => imagemSrc}
                                 unoptimized={true}
                                 src={imagemSrc} 
@@ -116,7 +117,7 @@ export default function InfoComic(): JSX.Element {
             <div className={styles.containerButtons}>
                 <a href={`/?page=comics`}>
                     <button
-                        className={styles.clickImage}
+                        className={styles.backButton}
                     >
                         <p>Voltar para Comics</p>
                     </button>

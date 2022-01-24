@@ -1,11 +1,14 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 //import { useEffect, useState } from "react";
 import styles from './styles.module.css';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import api from '../../services/api';
 import { baseURL } from '../../config/consts';
+import styled from 'styled-components';
 
 type CharacterProps = {
     thumbnail: {
@@ -24,6 +27,20 @@ type ThisProps = {
 export default function Character({id}: ThisProps): JSX.Element {
     const [data, setData] = useState<CharacterProps>();
     const [imageComic, setImageComic] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
+    const [size, setSize] = useState([0, 0]);
+
+    function useWindowSize() {
+        useLayoutEffect(() => {
+            function updateSize() {
+            setSize([window.innerWidth, window.innerHeight]);
+            }
+            window.addEventListener('resize', updateSize);
+            updateSize();
+            return () => window.removeEventListener('resize', updateSize);
+        }, []);
+    }
+
+    useWindowSize();
 
     function getComicById(id: number) {
         try{
@@ -49,32 +66,74 @@ export default function Character({id}: ThisProps): JSX.Element {
 
     return(
         <>  
-            <div className={styles.container}>
-                <div>
-                    <h2 className={styles.titleComic}>{data?.title}</h2>
-                </div>
-                <div className={styles.containerImage}>
-                    <a
-                        className={styles.clickImage}
-                        href={`/?page=info-comic`}
-                        onClick={() => {
-                            localStorage.setItem('link-comic', JSON.stringify(baseURL + "/comics/" + data?.id));
-                        }}
-                    >
-                        <Image
-                            loader={() => imageComic}
-                            unoptimized={true}
-                            src={imageComic} 
-                            alt={data?.title}
-                            height={300} 
-                            width={300}
-                        />
-                    </a>
-                    <p className={styles.clickForMore}>Clique na imagem para mais informações</p>
-                </div>
-                <div className={styles.containerInformations}>
-                </div>
-            </div>
+            <a
+                className={styles.clickImage}
+                href={`/?page=info-comic`}
+                onClick={() => {
+                    localStorage.setItem('link-comic', JSON.stringify(baseURL + "/comics/" + data?.id));
+                }}
+            >
+                {  
+                    size[0] > 720 ? (
+                        <ContainerComics>
+                            <div id="containerImage" className={styles.containerImage}>
+                                <img
+                                    id="image" 
+                                    className={styles.image}
+                                    src={imageComic} 
+                                />
+                                <div>
+                                    <h2 className={styles.titleComic}>{data?.title}</h2>
+                                </div>
+                                <div className={styles.containerInformations}>
+                                    <p className={styles.description}> {data?.description} </p>
+                                </div>
+                            </div>
+                        </ContainerComics>
+                    ) : (
+                        <div className={styles.container}>
+                            <div id="containerImage" className={styles.containerImage}>
+                                <img
+                                    id="image" 
+                                    className={styles.image}
+                                    src={imageComic} 
+                                />
+                                <div>
+                                    <h2 className={styles.titleComic}>{data?.title}</h2>
+                                </div>
+                                <div className={styles.containerInformations}>
+                                    <p className={styles.description}> {data?.description} </p>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+            </a>
         </>
     );
 }
+
+const ContainerComics = styled.div`
+    border: 2px solid black;
+    border-radius: 30px;
+    padding: 5px;
+    background-color: #ec1d24;
+    width: 300px;
+    height: 300px;
+    max-width: 300px;
+    max-height: 300px;
+    margin: 5px;
+    overflow: hidden;
+    color: white;
+
+    &:hover {
+        div#containerImage {
+            height: 100px;
+            transition: all 1s;
+        }
+        div#containerImage img {
+            height: 100px;
+            transition: all 1s;
+        }
+    }
+`;
