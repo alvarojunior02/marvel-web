@@ -118,7 +118,7 @@ const ContainerComics = styled.div`
     border-radius: 30px;
     padding: 5px;
     background-color: #ec1d24;
-    width: 300px;
+    width: 280px;
     height: 300px;
     max-width: 300px;
     max-height: 300px;

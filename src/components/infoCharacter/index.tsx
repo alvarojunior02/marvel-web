@@ -136,7 +136,7 @@ export default function InfoCharacter(): JSX.Element {
                                 <select
                                     className={styles.Uf}
                                     onChange={(newEvent) => {
-                                        setComicLink(newEvent.target.value);
+                                        localStorage.setItem('link-comic', JSON.stringify(newEvent.target.value));
                                     }}
                                 >
                                     {
@@ -155,13 +155,9 @@ export default function InfoCharacter(): JSX.Element {
                             )
                         : null
                     }
-                    <button
-                        onClick={() => {
-                            comicLink
-                        }}
-                    >
-                        Ir
-                    </button>
+                    <a href="/?page=info-comic"> 
+                        <button> Ir </button>
+                    </a>
                 </div>
             </div>
             <div className={styles.containerUrls}>
