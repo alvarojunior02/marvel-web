@@ -103,11 +103,12 @@ export default function ContainerCharacters(): JSX.Element {
 
     function searchCharacterByName(name: string) {
         try{
+            console.log(`${baseURL}/characters?name=${name}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`);
             axios.get(
-                `${baseURL}/characters?ts=${timestamp}&apikey=${publicKey}&hash=${hash}&name=${name}`,
+                `${baseURL}/characters?name=${name}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
             )
             .then(response => {    
-                console.log(response);
+                //console.log(response);
             })
             .catch(
                 error => console.log(error)
