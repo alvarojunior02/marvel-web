@@ -22,7 +22,8 @@ export default function InfoComic(): JSX.Element {
     const [size, setSize] = useState([1366, 768]);
     const [data, setData] = useState<InfoComicProps>();
     const [imagemSrc, setImagemSrc] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
-    const [backButton, setBackButton] = useState('false');
+    const [idCharacter, setIdCharacter] = useState(-1);
+    const [newLimit, setNewLimit] = useState();
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -62,8 +63,9 @@ export default function InfoComic(): JSX.Element {
             } else {
                 getComcisByLink("https".concat(rightLink));
             }
-            const back = JSON.parse(localStorage.getItem('back-character') || 'false');
-            setBackButton(back);
+            const {idCharacter, limit} = JSON.parse(localStorage.getItem('back-id-character') || JSON.parse('-1'));
+            setIdCharacter(idCharacter);
+            setNewLimit(limit);
         } catch (e) {
             console.log(e);
         }
@@ -120,12 +122,13 @@ export default function InfoComic(): JSX.Element {
             </div>
             <div className={styles.containerButtons}>
                 {
-                    backButton === 'true' ? (
+                    idCharacter ? (
                         <a href={`/?page=info-character`}>
                             <button
                                 className={styles.backButton}
                                 onClick={() => {
-                                    localStorage.removeItem('back-character');
+                                    localStorage.setItem('id-character', JSON.stringify({idCharacter, limit: newLimit}));
+                                    localStorage.removeItem('back-id-character');
                                 }}
                             >
                                 <p>Voltar para Personagem</p>

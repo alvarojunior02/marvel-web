@@ -107,7 +107,7 @@ export default function ContainerCharacters(): JSX.Element {
                     alert('Nada encontrado');
                     console.log('entrou aqui');
                 } else {
-                    localStorage.setItem('id-character', JSON.stringify({idCharacter: response.data.data.results[0].id, limit: 100}));
+                    localStorage.setItem('id-character', JSON.stringify({idCharacter: response.data.data.results[0].id, limit: response.data.data.results[0].comics.available}));
                     window.location.href = '/?page=info-character';
                 }
             })

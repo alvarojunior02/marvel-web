@@ -2,9 +2,9 @@ import md5 from 'md5';
 
 export const baseURL = 'https://gateway.marvel.com:443/v1/public';
 
-export const publicKey = '4412a6d9c05caa9dd37426dc666ad79c';
+export const publicKey = '4f9f2c907cddd16cc0bb83db5b39b877';
 
-const privateKey = 'c6ce91499ece9270e6e9044a3f2ba1845f6aee97';
+const privateKey = '652c4576cf2d84c19bdbd88bc231dbe8858d7230';
 
 export const timestamp = Number(new Date());
 

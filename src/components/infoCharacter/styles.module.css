@@ -35,6 +35,15 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    height: 420px;
+}
+
+.containerComicsList {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
     height: 420px;
@@ -51,6 +60,12 @@
 .titleComic {
     max-width: 200px;
     text-align: center;
+}
+
+.containerComicsResponsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .containerUrls h2 {

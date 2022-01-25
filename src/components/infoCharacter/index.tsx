@@ -10,6 +10,7 @@ import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import axios from 'axios';
 import api from '../../services/api';
 import { type } from 'os';
+import LoaderIndicator from '../loaderIndicator';
 
 type InfoCharacterProps = {
     thumbnail: {
@@ -118,7 +119,6 @@ export default function InfoCharacter(): JSX.Element {
 
     return (
         <>
-            {console.log(data)}
             <div className={styles.container}>
                 <div className={styles.body}>
                     <div className={
@@ -162,13 +162,15 @@ export default function InfoCharacter(): JSX.Element {
                 </div>
             </div>
             <h2>Comics do Personagem: </h2>
-            <div className={styles.containerComics}>
-                <div className={styles.containerComics}>
-                    {console.log(comics)}
+            <div className={comics?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
+                <div className={styles.containerComicsList}>
                     {
                         data?.comics?.available || -1 > 0 ?
-                            (
-                                comics
+                            (   
+                                comics?.length === 0 ? (
+                                    <LoaderIndicator />
+                                ) : (
+                                    comics
                                     .map((item: ComicType) => {
                                         return (
                                             <>
@@ -176,7 +178,7 @@ export default function InfoCharacter(): JSX.Element {
                                                     href="/?page=info-comic"
                                                     onClick={() => {
                                                         localStorage.setItem('link-comic', JSON.stringify(item?.resourceURI));
-                                                        localStorage.setItem('back-character', JSON.stringify('true'));
+                                                        localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: data?.comics?.available}));
                                                     }}
                                                 >
                                                     <div className={styles.containerSingleComic}>
@@ -196,6 +198,8 @@ export default function InfoCharacter(): JSX.Element {
                                             </>
                                         )
                                     })
+                                )
+                                
                             )
                         : null
                     }

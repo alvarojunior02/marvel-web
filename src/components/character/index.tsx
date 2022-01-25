@@ -76,7 +76,7 @@ export default function Character({id}: ThisProps): JSX.Element {
                 className={styles.clickImage}
                 href={`/?page=info-character`}
                 onClick={() => {
-                    localStorage.setItem('id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                    localStorage.setItem('id-character', JSON.stringify({idCharacter: data?.id, limit: data?.comics?.available}));
                 }}
             >
                 {  
