@@ -92,7 +92,7 @@ export default function InfoComic(): JSX.Element {
                                 src={imagemSrc} 
                                 alt={data?.title}
                                 height={500} 
-                                width={500}
+                                width={400}
                             />
                         </div>
                         <div className={styles.containerInfos}>

@@ -121,8 +121,8 @@ export default function ContainerComics(): JSX.Element {
                 >
                     <Image
                         src={Lupa}
-                        width={40}
-                        height={40}
+                        width={30}
+                        height={25}
                     />
                 </button>      
             </div>

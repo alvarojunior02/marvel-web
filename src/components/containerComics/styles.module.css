@@ -12,11 +12,10 @@
 }
 
 .buttonSearch {
-    border-radius: 50%;
+    border-radius: 30px;
     margin-top: -5px;
     cursor: pointer;
 }
-
 
 .container {
     display: flex;

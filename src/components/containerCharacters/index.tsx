@@ -34,6 +34,7 @@ export default function ContainerCharacters(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState('');
     const [contador, setContador] = useState(1);
     const [size, setSize] = useState([0, 0]);
+    const [searchResult, setSearchResult] = useState([]);
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -103,12 +104,11 @@ export default function ContainerCharacters(): JSX.Element {
 
     function searchCharacterByName(name: string) {
         try{
-            console.log(`${baseURL}/characters?name=${name}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`);
             axios.get(
                 `${baseURL}/characters?name=${name}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
             )
             .then(response => {    
-                //console.log(response);
+                setSearchResult(response.data.data.results);
             })
             .catch(
                 error => console.log(error)
@@ -122,13 +122,17 @@ export default function ContainerCharacters(): JSX.Element {
         getCharacters();
     }, []);
 
+    useEffect(() => {
+        setCharacters(searchResult.concat(characters));
+    }, [searchResult]);
+
     return(
         <>
             <div className={styles.search}>
                 <input 
                     style={size[0] > 720 ? {width: '400px'} : {width: '70%'}}
                     type="search" 
-                    placeholder="Ex: Spider-Man"
+                    placeholder="Ex: Hulk"
                     value={searchTerm}
                     onChange={event => {
                         setSearchTerm(event.target.value);
@@ -142,14 +146,14 @@ export default function ContainerCharacters(): JSX.Element {
                 >
                     <Image
                         src={Lupa}
-                        width="40"
-                        height="40"
+                        width={30}
+                        height={25}
                     />
                 </button>      
             </div>
             <div className={styles.containerButtons}>
                 <button
-                    disabled={characters.length === 0 ? true : false}
+                    disabled={characters?.length === 0 ? true : false}
                     type="button"
                     className={styles.button}
                     onClick={() => {
@@ -162,20 +166,20 @@ export default function ContainerCharacters(): JSX.Element {
             <div className={styles.container}>
                 <div id="1" className={styles.containerCharacters}>
                     { 
-                        characters.length === 0 ?
+                        characters?.length <= 0 ?
                             (
                                 <LoaderIndicator />
                             )
                         :
                             (   
-                            characters
-                                .map((data: DataProps) => {
-                                    return (
-                                        <Character 
-                                            id={data?.id}
-                                        />
-                                    );
-                                })
+                                characters
+                                    .map((data: DataProps) => {
+                                        return (
+                                            <Character 
+                                                id={data?.id}
+                                            />
+                                        );
+                                    })
                             )  
                     }
                 </div>

@@ -1,8 +1,15 @@
 .container {
   margin: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .body {
+  margin-top: 20px;
+  border-radius: 30px;
+  box-shadow: 2px 2px 2px #555;
   background-color: white;
   color: black;
   text-align: center;
@@ -11,6 +18,8 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
+  width: 90%;
+  max-width: 1080px;
 }
 
 .textTitle {
