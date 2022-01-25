@@ -22,6 +22,7 @@ export default function InfoComic(): JSX.Element {
     const [size, setSize] = useState([1366, 768]);
     const [data, setData] = useState<InfoComicProps>();
     const [imagemSrc, setImagemSrc] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
+    const [backButton, setBackButton] = useState('false');
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -61,9 +62,12 @@ export default function InfoComic(): JSX.Element {
             } else {
                 getComcisByLink("https".concat(rightLink));
             }
+            const back = JSON.parse(localStorage.getItem('back-character') || 'false');
+            setBackButton(back);
         } catch (e) {
             console.log(e);
         }
+        
     }, []);
 
     useEffect(() => {
@@ -115,9 +119,27 @@ export default function InfoComic(): JSX.Element {
                 </div>
             </div>
             <div className={styles.containerButtons}>
+                {
+                    backButton === 'true' ? (
+                        <a href={`/?page=info-character`}>
+                            <button
+                                className={styles.backButton}
+                                onClick={() => {
+                                    localStorage.removeItem('back-character');
+                                }}
+                            >
+                                <p>Voltar para Personagem</p>
+                            </button>
+                        </a>
+                    ) : null
+                }
+                
                 <a href={`/?page=comics`}>
                     <button
                         className={styles.backButton}
+                        onClick={() => {
+                            localStorage.removeItem('back-character');
+                        }}
                     >
                         <p>Voltar para Comics</p>
                     </button>

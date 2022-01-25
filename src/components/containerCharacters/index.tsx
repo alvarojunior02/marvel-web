@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -34,7 +35,6 @@ export default function ContainerCharacters(): JSX.Element {
     const [searchTerm, setSearchTerm] = useState('');
     const [contador, setContador] = useState(1);
     const [size, setSize] = useState([0, 0]);
-    const [searchResult, setSearchResult] = useState([]);
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -66,19 +66,14 @@ export default function ContainerCharacters(): JSX.Element {
 
     function getCharacters() {
         try {
-            api.get('/characters', {
-                params: {
-                    ts: timestamp,
-                    apikey: publicKey,
-                    hash: hash,
-                }
-            })
-            .then(response => { 
+            axios.get(
+                `${baseURL}/characters?&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
+            )
+              .then(response => {
                 setCharacters(response.data.data.results);
-            })
-            .catch(error => console.log(error));
+              })
         } catch (err) {
-            console.log(err);
+        console.log(err);
         }
     }
 
@@ -107,8 +102,14 @@ export default function ContainerCharacters(): JSX.Element {
             axios.get(
                 `${baseURL}/characters?name=${name}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
             )
-            .then(response => {    
-                setSearchResult(response.data.data.results);
+            .then(response => {
+                if (response.data.data.results === [])     {
+                    alert('Nada encontrado');
+                    console.log('entrou aqui');
+                } else {
+                    localStorage.setItem('id-character', JSON.stringify({idCharacter: response.data.data.results[0].id, limit: 100}));
+                    window.location.href = '/?page=info-character';
+                }
             })
             .catch(
                 error => console.log(error)
@@ -121,10 +122,6 @@ export default function ContainerCharacters(): JSX.Element {
     useEffect(() => {
         getCharacters();
     }, []);
-
-    useEffect(() => {
-        setCharacters(searchResult.concat(characters));
-    }, [searchResult]);
 
     return(
         <>
@@ -141,7 +138,7 @@ export default function ContainerCharacters(): JSX.Element {
                 <button
                     className={styles.buttonSearch}
                     onClick={() => {
-                        searchCharacterByName(searchTerm);
+                    searchCharacterByName(searchTerm);
                     }}
                 >
                     <Image
@@ -149,7 +146,7 @@ export default function ContainerCharacters(): JSX.Element {
                         width={30}
                         height={25}
                     />
-                </button>      
+                </button>  
             </div>
             <div className={styles.containerButtons}>
                 <button

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable jsx-a11y/alt-text */
@@ -31,16 +32,23 @@ type InfoCharacterProps = {
     ]
 }
 
-type ItemProps = {
-    type: string,
-    url: string,
+type ComicType = {
+    thumbnail: {
+        path: string,
+        extension: string,
+    },
+    title: string,
+    id: number,
+    description: string,
+    resourceURI: string,
 }
 
 export default function InfoCharacter(): JSX.Element {
     const [data, setData] = useState<InfoCharacterProps>();
+    const [comics, setComics] = useState([]);
     const [imagemSrc, setImagemSrc] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
+    const [imageComic, setImageComic] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
     const [size, setSize] = useState([1366, 768]);
-    const [comicLink, setComicLink] = useState('');
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -69,10 +77,36 @@ export default function InfoCharacter(): JSX.Element {
         }
     }
 
+    function getComicsByCharacter(id: number, limit: number) {
+        try{
+            api.get(`/characters/${id}/comics`, {
+                params: {
+                    limit,
+                }
+            })
+            .then(response => {    
+                setComics(response.data.data.results)
+            })
+            .catch(
+                error => console.log(error)
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function configureLink(item: ComicType) {
+        const linkComic = item?.thumbnail?.path + '.' + item?.thumbnail?.extension;
+        const linkSplit = linkComic.split('http');
+        const rightLink = linkSplit[1];
+        return ("https".concat(rightLink));
+    }
+
     useEffect(() => {
         try {
-            const idCharacter = JSON.parse(localStorage?.getItem('id-character') || '');
+            const {idCharacter, limit} = JSON.parse(localStorage?.getItem('id-character') || '');
             getCharacterById(idCharacter);
+            getComicsByCharacter(idCharacter, 100);
         } catch (e) {
             console.log(e);
         }
@@ -80,10 +114,11 @@ export default function InfoCharacter(): JSX.Element {
 
     useEffect(() => {
         setImagemSrc(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
-    }, [data])
+    }, [data]);
 
     return (
         <>
+            {console.log(data)}
             <div className={styles.container}>
                 <div className={styles.body}>
                     <div className={
@@ -126,38 +161,44 @@ export default function InfoCharacter(): JSX.Element {
                     </div>
                 </div>
             </div>
+            <h2>Comics do Personagem: </h2>
             <div className={styles.containerComics}>
-                <h2>Comics do Personagem: </h2>
-                {console.log(data?.comics?.items)}
-                <div className={styles.containerComicsSelect}>
+                <div className={styles.containerComics}>
+                    {console.log(comics)}
                     {
                         data?.comics?.available || -1 > 0 ?
                             (
-                                <select
-                                    className={styles.Uf}
-                                    onChange={(newEvent) => {
-                                        localStorage.setItem('link-comic', JSON.stringify(newEvent.target.value));
-                                    }}
-                                >
-                                    {
-                                        data?.comics?.items.map((item: any) => {
-                                            return (
-                                                <option
-                                                    value={item?.resourceURI}
+                                comics
+                                    .map((item: ComicType) => {
+                                        return (
+                                            <>
+                                                <a 
+                                                    href="/?page=info-comic"
+                                                    onClick={() => {
+                                                        localStorage.setItem('link-comic', JSON.stringify(item?.resourceURI));
+                                                        localStorage.setItem('back-character', JSON.stringify('true'));
+                                                    }}
                                                 >
-                                                    {item?.name}
-                                                </option>
-                                            );
-                                        })
-                                    
-                                    }
-                                </select>
+                                                    <div className={styles.containerSingleComic}>
+                                                        <div className={styles.containerImage}>                                                  
+                                                            <img
+                                                                className={styles.imageComic}
+                                                                src={configureLink(item)} 
+                                                                width={200}
+                                                                height={300}
+                                                            />
+                                                            <div>
+                                                                <p className={styles.titleComic}>{item?.title}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </>
+                                        )
+                                    })
                             )
                         : null
                     }
-                    <a href="/?page=info-comic"> 
-                        <button> Ir </button>
-                    </a>
                 </div>
             </div>
             <div className={styles.containerUrls}>
@@ -185,6 +226,10 @@ export default function InfoCharacter(): JSX.Element {
                 <a href={`/?page=characters`}>
                     <button
                         className={styles.backButton}
+                        onClick={() => {
+                            localStorage.removeItem('link-comic');
+                            localStorage.removeItem('back-character');
+                        }}
                     >
                         <p>Voltar</p>
                     </button>
