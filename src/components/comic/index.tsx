@@ -70,6 +70,7 @@ export default function Character({id}: ThisProps): JSX.Element {
                 className={styles.clickImage}
                 href={`/?page=info-comic`}
                 onClick={() => {
+                    localStorage.setItem('id-comic', JSON.stringify(data?.id));
                     localStorage.setItem('link-comic', JSON.stringify(baseURL + "/comics/" + data?.id));
                 }}
             >
@@ -124,12 +125,13 @@ const ContainerComics = styled.div`
 
     &:hover {
         div#containerImage {
-            height: 100px;
-            transition: all 1s;
+            height: 180px;
+            transition: all 0.8s;
         }
         div#containerImage img {
-            height: 100px;
-            transition: all 1s;
+            width: 120px;
+            height: 180px;
+            transition: all 0.8s;
         }
     }
 `;

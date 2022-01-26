@@ -57,7 +57,7 @@ type ComicType = {
     resourceURI: string,
 }
 
-export default function InfoComic(): JSX.Element {
+export default function InfoEvent(): JSX.Element {
     const [size, setSize] = useState([1366, 768]);
     const [data, setData] = useState<InfoComicProps>();
     const [creators, setCreators] = useState([]);
@@ -79,9 +79,9 @@ export default function InfoComic(): JSX.Element {
     
     useWindowSize();
 
-    function getComcic(id: number) {
+    function getEvent(id: number) {
         try{
-            api.get(`/comics/${id}`)
+            api.get(`/events/${id}`)
                 .then(response => {    
                     setData(response.data.data.results[0]);
                 })
@@ -94,11 +94,11 @@ export default function InfoComic(): JSX.Element {
         }
     }
 
-    function getCharacterByComicId(id: number) {
+    function getCharacterByEventId(id: number) {
         try{
             api.get(`/comics/${id}/characters`, {
                 params: {
-                    limit: 100,
+                    limit: 40,
                 }
             })
             .then(response => {    
@@ -112,11 +112,11 @@ export default function InfoComic(): JSX.Element {
         }
     }
 
-    function getCreatorsByComicId(id: number) {
+    function getCreatorsByEventId(id: number) {
         try{
-            api.get(`/comics/${id}/creators`, {
+            api.get(`/events/${id}/creators`, {
                 params: {
-                    limit: 40,
+                    limit: 100,
                 }
             })
             .then(response => {    
@@ -140,10 +140,10 @@ export default function InfoComic(): JSX.Element {
 
     useEffect(() => {
         try {
-            const idComic = JSON.parse(localStorage?.getItem('id-comic') || '');
-            getComcic(idComic);
-            getCharacterByComicId(idComic);
-            getCreatorsByComicId(idComic);
+            const idComic = JSON.parse(localStorage?.getItem('id-event') || '');
+            getEvent(idComic);
+            getCharacterByEventId(idComic);
+            getCreatorsByEventId(idComic);
             const {idCharacter, limit} = JSON.parse(localStorage.getItem('back-id-character') || JSON.parse('-1'));
             setIdCharacter(idCharacter);
             setNewLimit(limit);
@@ -158,19 +158,12 @@ export default function InfoComic(): JSX.Element {
     }, [data])
 
     return (
-        <>
+        <>  
             {
                 !data ? (
                     <LoaderIndicator />
                 ) : (
                     <>
-                        <div className={size[0] > 720 ? styles.divHeader : styles.divHeaderResponsive}>
-                            <header>
-                                <h1>
-                                    {data?.title}
-                                </h1>
-                            </header>
-                        </div>
                         <div className={styles.container}>
                             <div className={styles.body}>
                                 <div className={
@@ -195,6 +188,7 @@ export default function InfoComic(): JSX.Element {
                                         />
                                     </div>
                                     <div className={styles.containerInfos}>
+                                        <h1 className={styles.textName}>Título: {data?.title} </h1>
                                         <p className={styles.textDescription}>
                                             <b>Descrição: </b>
                                             {
@@ -229,8 +223,9 @@ export default function InfoComic(): JSX.Element {
                                                                 href="/?page=info-character"
                                                                 onClick={() => {
                                                                     localStorage.setItem('id-character', JSON.stringify({idCharacter: item?.id, limit: 100}));
-                                                                    localStorage.setItem('back-id-comic', JSON.stringify(data?.id));
-                                                                    localStorage.removeItem('id-comic');
+                                                                    localStorage.setItem('back-id-event', JSON.stringify(data?.id));
+                                                                    localStorage.removeItem('id-event');
+                                                                    localStorage.removeItem('back-id-comic');
                                                                 }}
                                                             >
                                                                 <div className={styles.containerSingleCharacter}>
@@ -315,8 +310,8 @@ export default function InfoComic(): JSX.Element {
                                             onClick={() => {
                                                 localStorage.setItem('id-character', JSON.stringify({idCharacter, limit: newLimit}));
                                                 localStorage.removeItem('back-id-character');
-                                                localStorage.removeItem('id-comic');
-                                                localStorage.setItem('back-id-comic', JSON.stringify(data?.id));
+                                                localStorage.removeItem('id-event');
+                                                localStorage.setItem('back-id-event', JSON.stringify(data?.id));
                                             }}
                                         >
                                             <p>Voltar para o Personagem</p>
@@ -324,20 +319,20 @@ export default function InfoComic(): JSX.Element {
                                     </a>
                                 ) : null
                             }
-                            <a href={`/?page=comics`}>
+                            <a href={`/?page=events`}>
                                 <button
                                     className={styles.backButton}
                                     onClick={() => {
                                         localStorage.removeItem('back-id-character');
-                                        localStorage.removeItem('id-comic');
+                                        localStorage.removeItem('id-event');
                                     }}
                                 >
-                                    <p>Voltar para Comics</p>
+                                    <p>Voltar para Eventos</p>
                                 </button>
                             </a>
                         </div>
                     </>
-                )
+                )   
             }
         </>
     )

@@ -26,7 +26,7 @@ export default function ContainerComics(): JSX.Element {
 
     const [comics, setComics] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [contador, setContador] = useState(1);
+    const [contador, setContador] = useState(2);
     const [size, setSize] = useState([0, 0]);
 
     function useWindowSize() {
@@ -57,17 +57,20 @@ export default function ContainerComics(): JSX.Element {
         });
     };
 
-    function filterCharacters(comic: { title: string; }) {
+    /*function filterCharacters(comic: { title: string; }) {
         return(
             comic.title.toUpperCase().includes(searchTerm.toUpperCase())
         );
-    }
+    }*/
 
     function getComics() {
         try {
-            axios.get(
-                `${baseURL}/comics?ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-            )
+            api.get('/comics', {
+                    params: {
+                        limit: 40,
+                    }
+                }
+        )
             .then(response => { 
                 setComics(response.data.data.results);
             })
@@ -83,6 +86,7 @@ export default function ContainerComics(): JSX.Element {
             api.get('/comics', {
                     params: {
                         offset,
+                        limit: 40,
                     }
                 }
             )
@@ -103,28 +107,23 @@ export default function ContainerComics(): JSX.Element {
 
     return(
         <>
-            <div className={styles.search}>
+            {/*<div className={styles.search}>
                 <input 
                     style={size[0] > 720 ? {width: '400px'} : {width: '70%'}}
                     type="search" 
-                    placeholder="Ex: Spider-Man"
+                    placeholder="Pesquisar"
                     value={searchTerm}
                     onChange={event => {
                         setSearchTerm(event.target.value);
                     }}
-                />
-                <button
-                    className={styles.buttonSearch}
-                    onClick={() => {
-                        
-                    }}
-                >
-                    <Image
-                        src={Lupa}
-                        width={30}
-                        height={25}
-                    />
-                </button>      
+                />    
+                </div>*/}
+            <div className={styles.divHeader}>
+                <header>
+                    <h1>
+                        COMICS
+                    </h1>
+                </header>
             </div>
             <div className={styles.containerButtons}>
                 <button
@@ -148,7 +147,7 @@ export default function ContainerComics(): JSX.Element {
                         :
                             (   
                             comics
-                                .filter(character => filterCharacters(character))
+                                //.filter(character => filterCharacters(character))
                                 .map((data: DataProps) => {
                                     return (
                                         <Comic 
@@ -177,7 +176,7 @@ export default function ContainerComics(): JSX.Element {
                     className={styles.button}
                     onClick={() => {
                         moreComics(contador);
-                        setContador(contador + 1);
+                        setContador(contador + 2);
                     }}
                 >
                     + Comics

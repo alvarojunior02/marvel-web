@@ -1,15 +1,15 @@
 .container {
     border-radius: 30px;
     padding: 5px;
-    width: 280px;
-    max-height: 360px;
-    max-width: 280px;
-    max-height: 360px;
+    width: 265px;
+    height: 380px;
+    max-width: 300px;
+    max-height: 380px;
     margin: 5px;
     color: black;
 }
 
-.nameCharacter {
+.titleEvent {
     font-size: 16px;
     text-align: center;
 }
@@ -22,9 +22,8 @@
 }
 
 .image {
-    border-radius: 30px;
-    height: 300px;
-    width: 100%;
+    height: 100%;
+    width: 200px;
     box-shadow: 6px 6px 6px black;
 }
 

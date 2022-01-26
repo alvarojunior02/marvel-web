@@ -12,8 +12,10 @@ import iconComics from '../../../public/images/iconComics.png';
 import iconEvents from '../../../public/images/iconEvents.png';
 import iconCreators from '../../../public/images/iconCreators.png';
 
-export default function NavBarWeb(): JSX.Element {
+export default function NavBarMobile(): JSX.Element {
     const [size, setSize] = useState([0, 0]);
+    const iconWidth = 30;
+    const iconHeight = 30;
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -37,8 +39,8 @@ export default function NavBarWeb(): JSX.Element {
                     >
                         <Image 
                             src={marvelLogo}
-                            width="120px"
-                            height="80px"
+                            width="50"
+                            height="35"
                         />
                     </a>
                 </div>
@@ -51,14 +53,14 @@ export default function NavBarWeb(): JSX.Element {
                                 localStorage.removeItem('back-id-comic');
                                 localStorage.removeItem('back-id-character');
                                 localStorage.removeItem('back-id-event');
+                                localStorage.removeItem('back-id-creator');
                             }}
                         >
                             <Image 
                                 src={iconSuperhero2}
-                                width="40"
-                                height="40"
+                                width={iconWidth}
+                                height={iconHeight}
                             />
-                            <p>Personagens</p>
                         </a>
                         <a
                             className={styles.navBarLink}
@@ -72,10 +74,9 @@ export default function NavBarWeb(): JSX.Element {
                         >
                             <Image 
                                 src={iconComics}
-                                width="40"
-                                height="40"
+                                width={iconWidth}
+                                height={iconHeight}
                             />
-                            <p>Comics</p>
                         </a>
                         <a
                             className={styles.navBarLink}
@@ -89,10 +90,9 @@ export default function NavBarWeb(): JSX.Element {
                         >
                             <Image 
                                 src={iconEvents}
-                                width="40"
-                                height="40"
+                                width={iconWidth}
+                                height={iconHeight}
                             />
-                            <p>Eventos</p>
                         </a>
                         <a
                             className={styles.navBarLink}
@@ -106,10 +106,9 @@ export default function NavBarWeb(): JSX.Element {
                         >
                             <Image 
                                 src={iconCreators}
-                                width="40"
-                                height="40"
+                                width={iconWidth}
+                                height={iconHeight}
                             />
-                            <p>Criadores</p>
                         </a>
                     </nav>
                 </div>

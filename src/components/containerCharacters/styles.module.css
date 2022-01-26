@@ -1,3 +1,17 @@
+.divHeader {
+    width: 100%;
+    padding: 10px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: 100px;
+    background-color: #EC1D24;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
 .search {
     display: flex;
     justify-content: center;
@@ -12,8 +26,8 @@
 }
 
 .buttonSearch {
+    margin-left: 15px;
     border-radius: 30px;
-    margin-top: -5px;
     cursor: pointer;
 }
 

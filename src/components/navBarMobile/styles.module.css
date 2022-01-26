@@ -24,7 +24,7 @@
 
 .navBar nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -36,16 +36,11 @@
     padding: 5px;
 }
 
-.navBar nav a:hover {
-   opacity: 0.8;
-}
-
 .navBar nav a p {
     color: black;
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
     cursor: pointer;
-    margin-left: 10px;
 }
 
 .navBarLink {

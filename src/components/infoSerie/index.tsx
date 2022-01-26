@@ -19,6 +19,9 @@ type InfoComicProps ={
     characters: {
         available: number,
     },
+    comics: {
+        available: number,
+    }
     creators: {
         available: number;
     }
@@ -51,20 +54,22 @@ type ComicType = {
         path: string,
         extension: string,
     },
+    title: string;
     fullName: string,
     id: number,
     description: string,
     resourceURI: string,
 }
 
-export default function InfoComic(): JSX.Element {
+export default function InfoSerie(): JSX.Element {
     const [size, setSize] = useState([1366, 768]);
     const [data, setData] = useState<InfoComicProps>();
+    const [characters, setCharacters] = useState([]);
+    const [comics, setComics] = useState([]);
     const [creators, setCreators] = useState([]);
     const [imagemSrc, setImagemSrc] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
     const [idCharacter, setIdCharacter] = useState(-1);
     const [newLimit, setNewLimit] = useState();
-    const [characters, setCharacters] = useState([]);
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -79,9 +84,9 @@ export default function InfoComic(): JSX.Element {
     
     useWindowSize();
 
-    function getComcic(id: number) {
+    function getSerie(id: number) {
         try{
-            api.get(`/comics/${id}`)
+            api.get(`/series/${id}`)
                 .then(response => {    
                     setData(response.data.data.results[0]);
                 })
@@ -94,11 +99,11 @@ export default function InfoComic(): JSX.Element {
         }
     }
 
-    function getCharacterByComicId(id: number) {
+    function getCharacterBySerieId(id: number) {
         try{
-            api.get(`/comics/${id}/characters`, {
+            api.get(`/series/${id}/characters`, {
                 params: {
-                    limit: 100,
+                    limit: data?.characters?.available,
                 }
             })
             .then(response => {    
@@ -112,11 +117,30 @@ export default function InfoComic(): JSX.Element {
         }
     }
 
-    function getCreatorsByComicId(id: number) {
+    function getComicsBySerieId(id: number) {
         try{
-            api.get(`/comics/${id}/creators`, {
+            api.get(`/series/${id}/comics`, {
                 params: {
-                    limit: 40,
+                    limit: data?.comics?.available,
+                }
+            })
+            .then(response => {    
+                console.log(response.data.data.results);
+                setComics(response.data.data.results);
+            })
+            .catch(
+                error => console.log(error)
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function getCreatorsBySerieId(id: number) {
+        try{
+            api.get(`/series/${id}/creators`, {
+                params: {
+                    limit: data?.creators?.available,
                 }
             })
             .then(response => {    
@@ -140,10 +164,11 @@ export default function InfoComic(): JSX.Element {
 
     useEffect(() => {
         try {
-            const idComic = JSON.parse(localStorage?.getItem('id-comic') || '');
-            getComcic(idComic);
-            getCharacterByComicId(idComic);
-            getCreatorsByComicId(idComic);
+            const idSerie = JSON.parse(localStorage?.getItem('id-serie') || '');
+            getSerie(idSerie);
+            getCharacterBySerieId(idSerie);
+            getComicsBySerieId(idSerie);
+            getCreatorsBySerieId(idSerie);
             const {idCharacter, limit} = JSON.parse(localStorage.getItem('back-id-character') || JSON.parse('-1'));
             setIdCharacter(idCharacter);
             setNewLimit(limit);
@@ -158,19 +183,13 @@ export default function InfoComic(): JSX.Element {
     }, [data])
 
     return (
-        <>
+        <>  
+        {console.log(data)}
             {
                 !data ? (
                     <LoaderIndicator />
                 ) : (
                     <>
-                        <div className={size[0] > 720 ? styles.divHeader : styles.divHeaderResponsive}>
-                            <header>
-                                <h1>
-                                    {data?.title}
-                                </h1>
-                            </header>
-                        </div>
                         <div className={styles.container}>
                             <div className={styles.body}>
                                 <div className={
@@ -195,6 +214,7 @@ export default function InfoComic(): JSX.Element {
                                         />
                                     </div>
                                     <div className={styles.containerInfos}>
+                                        <h1 className={styles.textName}>Título: {data?.title} </h1>
                                         <p className={styles.textDescription}>
                                             <b>Descrição: </b>
                                             {
@@ -229,8 +249,12 @@ export default function InfoComic(): JSX.Element {
                                                                 href="/?page=info-character"
                                                                 onClick={() => {
                                                                     localStorage.setItem('id-character', JSON.stringify({idCharacter: item?.id, limit: 100}));
-                                                                    localStorage.setItem('back-id-comic', JSON.stringify(data?.id));
+                                                                    localStorage.setItem('back-id-serie', JSON.stringify(data?.id));
                                                                     localStorage.removeItem('id-comic');
+                                                                    localStorage.removeItem('id-event');
+                                                                    localStorage.removeItem('back-id-comic');
+                                                                    localStorage.removeItem('back-id-character');
+                                                                    localStorage.removeItem('back-id-event');
                                                                 }}
                                                             >
                                                                 <div className={styles.containerSingleCharacter}>
@@ -253,13 +277,59 @@ export default function InfoComic(): JSX.Element {
                                             )
                                             
                                         )
-                                    : (
-                                        <h3>Nenhum Encontrado...</h3>
-                                    )
+                                    : null
                                 }
                             </div>
                         </div>
-                        <h2>Alguns dos Criadores: </h2>
+                        <h2>Comics: </h2>
+                        <div className={comics?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
+                            <div className={styles.containerComicsList}>
+                                {
+                                    data?.comics?.available || -1 > 0 ?
+                                        (   
+                                            comics?.length === 0 ? (
+                                                <LoaderIndicator />
+                                            ) : (
+                                                comics
+                                                .map((item: ComicType, index: number) => {
+                                                    return (
+                                                        <>
+                                                            <a 
+                                                                key={index}
+                                                                href="/?page=info-comic"
+                                                                onClick={() => {
+                                                                    localStorage.setItem('id-comic', JSON.stringify(item?.id));
+                                                                    localStorage.setItem('back-id-serie', JSON.stringify(data?.id));
+                                                                    localStorage.removeItem('id-character');
+                                                                    localStorage.removeItem('id-serie');
+                                                                    localStorage.removeItem('back-id-character');
+                                                                }}
+                                                            >
+                                                                <div className={styles.containerSingleComic}>
+                                                                    <div className={styles.containerImage}>                                                  
+                                                                        <img
+                                                                            className={size[0] > 720 ? styles.imageComic : styles.imageComicResponsive}
+                                                                            src={configureLink(item)} 
+                                                                            width={200}
+                                                                            height={300}
+                                                                        />
+                                                                        <div className={styles.containerTitleComic}>
+                                                                            <p className={styles.titleComic}>{item?.title}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </>
+                                                    )
+                                                })
+                                            )
+                                            
+                                        )
+                                    : null
+                                }
+                            </div>
+                        </div>
+                        <h2>Criadores: </h2>
                         <div className={creators?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
                             <div className={styles.containerComicsList}>
                                 {
@@ -300,9 +370,7 @@ export default function InfoComic(): JSX.Element {
                                             )
                                             
                                         )
-                                    : (
-                                        <h3>Nenhum Encontrado...</h3>
-                                    )
+                                    : null
                                 }
                             </div>
                         </div>
@@ -315,8 +383,12 @@ export default function InfoComic(): JSX.Element {
                                             onClick={() => {
                                                 localStorage.setItem('id-character', JSON.stringify({idCharacter, limit: newLimit}));
                                                 localStorage.removeItem('back-id-character');
+                                                localStorage.removeItem('id-serie');
+                                                localStorage.setItem('back-id-serie', JSON.stringify(data?.id));
                                                 localStorage.removeItem('id-comic');
-                                                localStorage.setItem('back-id-comic', JSON.stringify(data?.id));
+                                                localStorage.removeItem('id-event');
+                                                localStorage.removeItem('back-id-comic');
+                                                localStorage.removeItem('back-id-event');
                                             }}
                                         >
                                             <p>Voltar para o Personagem</p>
@@ -324,20 +396,20 @@ export default function InfoComic(): JSX.Element {
                                     </a>
                                 ) : null
                             }
-                            <a href={`/?page=comics`}>
+                            <a href={`/?page=events`}>
                                 <button
                                     className={styles.backButton}
                                     onClick={() => {
                                         localStorage.removeItem('back-id-character');
-                                        localStorage.removeItem('id-comic');
+                                        localStorage.removeItem('id-event');
                                     }}
                                 >
-                                    <p>Voltar para Comics</p>
+                                    <p>Voltar para Eventos</p>
                                 </button>
                             </a>
                         </div>
                     </>
-                )
+                )   
             }
         </>
     )

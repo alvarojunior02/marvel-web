@@ -27,6 +27,15 @@ type InfoCharacterProps = {
             resourceURI: string,
         ]   
     },
+    events: {
+        available: number;
+    },
+    series: {
+        available: number,
+    },
+    stories: {
+        available: number,
+    }
     urls: [
         type: string,
         url: string,
@@ -39,6 +48,7 @@ type ComicType = {
         extension: string,
     },
     title: string,
+    name: string,
     id: number,
     description: string,
     resourceURI: string,
@@ -47,9 +57,13 @@ type ComicType = {
 export default function InfoCharacter(): JSX.Element {
     const [data, setData] = useState<InfoCharacterProps>();
     const [comics, setComics] = useState([]);
+    const [events, setEvents] = useState([]);
+    const [series, setSeries] = useState([]);
     const [imagemSrc, setImagemSrc] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
-    const [imageComic, setImageComic] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
     const [size, setSize] = useState([1366, 768]);
+    const [backIdComic, setBackIdComic] = useState(-1);
+    const [backIdEvent, setBackIdEvent] = useState(-1);
+    const [backIdSerie, setBackIdSerie] = useState(-1);
 
     function useWindowSize() {
         useLayoutEffect(() => {
@@ -78,15 +92,51 @@ export default function InfoCharacter(): JSX.Element {
         }
     }
 
-    function getComicsByCharacter(id: number, limit: number) {
+    function getComicsByCharacter(id: number) {
         try{
             api.get(`/characters/${id}/comics`, {
                 params: {
-                    limit,
+                    limit: 100,
                 }
             })
             .then(response => {    
-                setComics(response.data.data.results)
+                setComics(response.data.data.results);
+            })
+            .catch(
+                error => console.log(error)
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function getEventsByCharacter(id: number) {
+        try{
+            api.get(`/characters/${id}/events`, {
+                params: {
+                    limit: 100,
+                }
+            })
+            .then(response => {    
+                setEvents(response.data.data.results);
+            })
+            .catch(
+                error => console.log(error)
+            )
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    function getSeriesByCharacter(id: number) {
+        try{
+            api.get(`/characters/${id}/series`, {
+                params: {
+                    limit: 100,
+                }
+            })
+            .then(response => {    
+                setSeries(response.data.data.results);
             })
             .catch(
                 error => console.log(error)
@@ -107,7 +157,15 @@ export default function InfoCharacter(): JSX.Element {
         try {
             const {idCharacter, limit} = JSON.parse(localStorage?.getItem('id-character') || '');
             getCharacterById(idCharacter);
-            getComicsByCharacter(idCharacter, 100);
+            getComicsByCharacter(idCharacter);
+            getEventsByCharacter(idCharacter);
+            getSeriesByCharacter(idCharacter);
+            const idComic = JSON.parse(localStorage.getItem('back-id-comic') || '-1');
+            setBackIdComic(idComic);
+            const idEvent = JSON.parse(localStorage.getItem('back-id-event') || '-1');
+            setBackIdEvent(idEvent);
+            const idSerie = JSON.parse(localStorage.getItem('back-id-serie') || '-1');
+            setBackIdSerie(idSerie);
         } catch (e) {
             console.log(e);
         }
@@ -119,126 +177,294 @@ export default function InfoCharacter(): JSX.Element {
 
     return (
         <>
-            <div className={styles.container}>
-                <div className={styles.body}>
-                    <div className={
-                        size[0] > 720 ?
-                            (
-                                styles.container
-                            )
-                        : 
-                            (
-                                styles.container2
-                            )
-                    }>
-                        <div className={styles.containerImage}>
-                            <Image
-                                className={styles.image}
-                                loader={() => imagemSrc}
-                                unoptimized={true}
-                                src={imagemSrc} 
-                                alt={data?.name}
-                                height={400} 
-                                width={400}
-                            />
+
+            {
+                !data ? (
+                    <LoaderIndicator />
+                ) : (
+                    <>
+                        <div className={size[0] > 720 ? styles.divHeader : styles.divHeaderResponsive}>
+                            <header>
+                                <h1>
+                                    {data?.name}
+                                </h1>
+                            </header>
                         </div>
-                        <div className={styles.containerInfos}>
-                            <h1 className={styles.textName}>Nome: {data?.name} </h1>
-                            <p className={styles.textDescription}>
-                                <b>Descrição: </b>
+                        <div className={styles.container}>
+                            <div className={styles.body}>
+                                <div className={
+                                    size[0] > 720 ?
+                                        (
+                                            styles.container
+                                        )
+                                    : 
+                                        (
+                                            styles.container2
+                                        )
+                                }>
+                                    <div className={styles.containerImage}>
+                                        <Image
+                                            className={styles.image}
+                                            loader={() => imagemSrc}
+                                            unoptimized={true}
+                                            src={imagemSrc} 
+                                            alt={data?.name}
+                                            height={400} 
+                                            width={400}
+                                        />
+                                    </div>
+                                    <div className={styles.containerInfos}>
+                                        <p className={styles.textDescription}>
+                                            <b>Descrição: </b>
+                                            {
+                                                data?.description !== '' ?
+                                                    (
+                                                        ' ' + data?.description
+                                                    )
+                                                :
+                                                    (
+                                                        ' *não fornecida'
+                                                    )
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>Comics: </h2>
+                        <div className={comics?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
+                            <div className={styles.containerComicsList}>
                                 {
-                                    data?.description !== '' ?
-                                        (
-                                            ' ' + data?.description
+                                    data?.comics?.available || -1 > 0 ?
+                                        (   
+                                            comics?.length === 0 ? (
+                                                <LoaderIndicator />
+                                            ) : (
+                                                comics
+                                                .map((item: ComicType, index: number) => {
+                                                    return (
+                                                        <>
+                                                            <a 
+                                                                key={index}
+                                                                href="/?page=info-comic"
+                                                                onClick={() => {
+                                                                    localStorage.setItem('id-comic', JSON.stringify(item?.id));
+                                                                    localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                                                    localStorage.removeItem('id-character');
+                                                                }}
+                                                            >
+                                                                <div className={styles.containerSingleComic}>
+                                                                    <div className={styles.containerImage}>                                                  
+                                                                        <img
+                                                                            className={size[0] > 720 ? styles.imageComic : styles.imageComicResponsive}
+                                                                            src={configureLink(item)} 
+                                                                            width={200}
+                                                                            height={300}
+                                                                        />
+                                                                        <div className={styles.containerTitleComic}>
+                                                                            <p className={styles.titleComic}>{item?.title}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </>
+                                                    )
+                                                })
+                                            )
+                                            
                                         )
-                                    :
-                                        (
-                                            ' *não fornecida'
-                                        )
-                                }
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <h2>Comics do Personagem: </h2>
-            <div className={comics?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
-                <div className={styles.containerComicsList}>
-                    {
-                        data?.comics?.available || -1 > 0 ?
-                            (   
-                                comics?.length === 0 ? (
-                                    <LoaderIndicator />
-                                ) : (
-                                    comics
-                                    .map((item: ComicType) => {
-                                        return (
-                                            <>
-                                                <a 
-                                                    href="/?page=info-comic"
-                                                    onClick={() => {
-                                                        localStorage.setItem('link-comic', JSON.stringify(item?.resourceURI));
-                                                        localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: data?.comics?.available}));
-                                                    }}
-                                                >
-                                                    <div className={styles.containerSingleComic}>
-                                                        <div className={styles.containerImage}>                                                  
-                                                            <img
-                                                                className={styles.imageComic}
-                                                                src={configureLink(item)} 
-                                                                width={200}
-                                                                height={300}
-                                                            />
-                                                            <div>
-                                                                <p className={styles.titleComic}>{item?.title}</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </>
-                                        )
-                                    })
-                                )
-                                
-                            )
-                        : null
-                    }
-                </div>
-            </div>
-            <div className={styles.containerUrls}>
-                <h2>URLs Uteis: </h2>
-                {
-                    data?.urls.length || -1 > 0 ?
-                        (
-                            data?.urls
-                                .map((item: any) => {
-                                    return (
-                                        <>
-                                            <div>
-                                                <a target='_blank' href={item?.url} rel="noreferrer">
-                                                    <p>{item?.type.toUpperCase()}</p>
-                                                </a>
-                                            </div>
-                                        </>    
+                                    : (
+                                        <h3>Nenhuma Encontrada...</h3>
                                     )
-                                })
-                        )
-                    : null
-                }
-            </div>
-            <div className={styles.containerButtons}>
-                <a href={`/?page=characters`}>
-                    <button
-                        className={styles.backButton}
-                        onClick={() => {
-                            localStorage.removeItem('link-comic');
-                            localStorage.removeItem('back-character');
-                        }}
-                    >
-                        <p>Voltar</p>
-                    </button>
-                </a>
-            </div>
+                                }
+                            </div>
+                        </div>
+                        <h2>Eventos: </h2>
+                        <div className={events?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
+                            <div className={styles.containerComicsList}>
+                                {
+                                    data?.events?.available || -1 > 0 ?
+                                        (   
+                                            events?.length === 0 ? (
+                                                <LoaderIndicator />
+                                            ) : (
+                                                events
+                                                .map((item: ComicType, index: number) => {
+                                                    return (
+                                                        <>
+                                                            <a 
+                                                                href="/?page=info-event"
+                                                                key={index}
+                                                                onClick={() => {
+                                                                    localStorage.setItem('id-event', JSON.stringify(item?.id));
+                                                                    localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                                                    localStorage.removeItem('id-character');
+                                                                    localStorage.removeItem('back-id-comic');
+                                                                    
+                                                                }}
+                                                            >
+                                                                <div className={styles.containerSingleComic}>
+                                                                    <div className={styles.containerImage}>                                                  
+                                                                        <img
+                                                                            className={size[0] > 720 ? styles.imageComic : styles.imageComicResponsive}
+                                                                            src={configureLink(item)} 
+                                                                            width={200}
+                                                                            height={300}
+                                                                        />
+                                                                        <div className={styles.containerTitleComic}>
+                                                                            <p className={styles.titleComic}>{item?.title}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </>
+                                                    )
+                                                })
+                                            )
+                                            
+                                        )
+                                    : (
+                                        <h3>Nenhum Encontrado...</h3>
+                                    )
+                                }
+                            </div>
+                        </div>
+                        <h2>Series: </h2>
+                        <div className={series?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
+                            <div className={styles.containerComicsList}>
+                                {
+                                    data?.series?.available || -1 > 0 ?
+                                        (   
+                                            series?.length === 0 ? (
+                                                <LoaderIndicator />
+                                            ) : (
+                                                series
+                                                .map((item: ComicType, index: number) => {
+                                                    return (
+                                                        <>
+                                                            <a 
+                                                                href="/?page=info-serie"
+                                                                key={index}
+                                                                onClick={() => {
+                                                                    localStorage.setItem('id-serie', JSON.stringify(item?.id));
+                                                                    localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                                                    localStorage.removeItem('id-character');
+                                                                }}
+                                                            >
+                                                                <div className={styles.containerSingleComic}>
+                                                                    <div className={styles.containerImage}>                                                  
+                                                                        <img
+                                                                            className={size[0] > 720 ? styles.imageComic : styles.imageComicResponsive}
+                                                                            src={configureLink(item)} 
+                                                                            width={200}
+                                                                            height={300}
+                                                                        />
+                                                                        <div className={styles.containerTitleComic}>
+                                                                            <p className={styles.titleComic}>{item?.title}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </>
+                                                    )
+                                                })
+                                            )
+                                            
+                                        )
+                                    : (
+                                        <h3>Nenhuma Encontrada...</h3>
+                                    )
+                                }
+                            </div>
+                        </div>
+                        <div className={styles.containerUrls}>
+                            <h2>URLs Uteis: </h2>
+                            {
+                                data?.urls.length || -1 > 0 ?
+                                    (
+                                        data?.urls
+                                            .map((item: any, index: any) => {
+                                                return (
+                                                    <>
+                                                        <div key={index}>
+                                                            <a target='_blank' href={item?.url} rel="noreferrer">
+                                                                <p>{item?.type.toUpperCase()}</p>
+                                                            </a>
+                                                        </div>
+                                                    </>    
+                                                )
+                                            })
+                                    )
+                                : null
+                            }
+                        </div>
+                        <div className={styles.containerButtons}>
+                            {
+                                backIdComic !== -1 ? (
+                                    <a href={`/?page=info-comic`}>
+                                        <button
+                                            className={styles.backButton}
+                                            onClick={() => {
+                                                localStorage.setItem('id-comic', JSON.stringify(backIdComic));
+                                                localStorage.removeItem('back-id-comic');
+                                                localStorage.removeItem('id-character');
+                                                localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                            }}
+                                        >
+                                            <p>Voltar para a Comic</p>
+                                        </button>
+                                    </a>
+                                ) : null
+                            }
+                            {
+                                backIdEvent !== -1 ? (
+                                    <a href={`/?page=info-event`}>
+                                        <button
+                                            className={styles.backButton}
+                                            onClick={() => {
+                                                localStorage.setItem('id-event', JSON.stringify(backIdEvent));
+                                                localStorage.removeItem('back-id-event');
+                                                localStorage.removeItem('id-character');
+                                                localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                            }}
+                                        >
+                                            <p>Voltar para o Evento</p>
+                                        </button>
+                                    </a>
+                                ) : null
+                            }
+                            {
+                                backIdSerie !== -1 ? (
+                                    <a href={`/?page=info-comic`}>
+                                        <button
+                                            className={styles.backButton}
+                                            onClick={() => {
+                                                localStorage.setItem('id-serie', JSON.stringify(backIdSerie));
+                                                localStorage.removeItem('back-id-serie');
+                                                localStorage.removeItem('id-character');
+                                                localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                            }}
+                                        >
+                                            <p>Voltar para a Serie</p>
+                                        </button>
+                                    </a>
+                                ) : null
+                            }    
+                            <a href={`/?page=characters`}>
+                                <button
+                                    className={styles.backButton}
+                                    onClick={() => {
+                                        localStorage.removeItem('link-comic');
+                                        localStorage.removeItem('back-character');
+                                    }}
+                                >
+                                    <p>Voltar para Personagens</p>
+                                </button>
+                            </a>
+                        </div>
+                    </>
+                )
+            }
         </>
     )
 }

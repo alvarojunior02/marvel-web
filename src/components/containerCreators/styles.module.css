@@ -25,19 +25,14 @@
     padding: 5px;
 }
 
-.buttonSearch {
-    border-radius: 30px;
-    margin-top: -5px;
-    cursor: pointer;
-}
-
 .container {
     display: flex;
     justify-content: center;
     height: 100%;
+    width: 100%;
 }
 
-.containerComics {
+.containerCharacters {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

@@ -22,9 +22,9 @@
 }
 
 .image {
-    border-radius: 20px;
     height: 100%;
     width: 200px;
+    box-shadow: 6px 6px 6px black;
 }
 
 .clickImage {

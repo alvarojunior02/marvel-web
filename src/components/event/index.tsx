@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-html-link-for-pages */
 //import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import styles from './styles.module.css';
 import Image from 'next/image';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import api from '../../services/api';
+import { baseURL } from '../../config/consts';
 import styled from 'styled-components';
 
 type CharacterProps = {
@@ -14,16 +15,9 @@ type CharacterProps = {
         path: string,
         extension: string,
     },
-    name: string,
+    title: string,
     id: number,
     description: string,
-    comics: {
-        available: number,
-        items: {
-            name: string,
-            resourceURI: string,
-        },
-    },
 }
 
 type ThisProps = {
@@ -32,13 +26,13 @@ type ThisProps = {
 
 export default function Character({id}: ThisProps): JSX.Element {
     const [data, setData] = useState<CharacterProps>();
+    const [imageComic, setImageComic] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
     const [size, setSize] = useState([0, 0]);
-    const [imageCharacter, setImageCharacter] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
 
     function useWindowSize() {
         useLayoutEffect(() => {
             function updateSize() {
-                setSize([window.innerWidth, window.innerHeight]);
+            setSize([window.innerWidth, window.innerHeight]);
             }
             window.addEventListener('resize', updateSize);
             updateSize();
@@ -48,9 +42,9 @@ export default function Character({id}: ThisProps): JSX.Element {
 
     useWindowSize();
 
-    function getCharacterById(id: number) {
+    function getEventById(id: number) {
         try{
-            api.get(`/characters/${id}`)
+            api.get(`/comics/${id}`)
             .then(response => {    
                 setData(response.data.data.results[0]);
             })
@@ -63,49 +57,49 @@ export default function Character({id}: ThisProps): JSX.Element {
     }
 
     useEffect(() => {
-        getCharacterById(id);
+        getEventById(id);
     }, []);
 
     useEffect(() => {
-        setImageCharacter(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
+        setImageComic(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
     }, [data]);
 
     return(
-        <>     
+        <>  
             <a
                 className={styles.clickImage}
-                href={`/?page=info-character`}
+                href={`/?page=info-event`}
                 onClick={() => {
-                    localStorage.setItem('id-character', JSON.stringify({idCharacter: data?.id, limit: data?.comics?.available}));
+                    localStorage.setItem('id-event', JSON.stringify(data?.id));
                 }}
             >
                 {  
                     size[0] > 720 ? (
-                        <ContainerCharacter>
+                        <ContainerEvents>
                             <div id="containerImage" className={styles.containerImage}>
                                 <img
                                     id="image" 
                                     className={styles.image}
-                                    src={imageCharacter} 
+                                    src={imageComic} 
                                 />
                                 <div>
-                                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
+                                    <h2 className={styles.titleEvent}>{data?.title}</h2>
                                 </div>
                                 <div className={styles.containerInformations}>
                                     <p className={styles.description}> {data?.description} </p>
                                 </div>
                             </div>
-                        </ContainerCharacter>
+                        </ContainerEvents>
                     ) : (
                         <div className={styles.container}>
                             <div id="containerImage" className={styles.containerImage}>
                                 <img
                                     id="image" 
                                     className={styles.image}
-                                    src={imageCharacter} 
+                                    src={imageComic} 
                                 />
                                 <div>
-                                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
+                                    <h2 className={styles.titleEvent}>{data?.title}</h2>
                                 </div>
                             </div>
                         </div>
@@ -116,14 +110,14 @@ export default function Character({id}: ThisProps): JSX.Element {
     );
 }
 
-const ContainerCharacter = styled.div`
-    
+const ContainerEvents = styled.div`
     border-radius: 30px;
     padding: 5px;
+    background-color: white;
     width: 280px;
-    height: 300px;
-    max-width: 280px;
-    max-height: 300px;
+    height: 380px;
+    max-width: 300px;
+    max-height: 380px;
     margin: 5px;
     overflow: hidden;
     color: black;
@@ -135,7 +129,7 @@ const ContainerCharacter = styled.div`
         }
         div#containerImage img {
             width: 120px;
-            height: 140px;
+            height: 180px;
             transition: all 0.8s;
         }
     }

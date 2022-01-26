@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -6,32 +6,25 @@ import styles from './styles.module.css';
 import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import axios from 'axios';
 import api from "../../services/api";
-import Image from 'next/image';
+import Image from "next/image";
 
-import Character from "../character";
 import LoaderIndicator from "../loaderIndicator";
+import Event from '../event';
 import Lupa from '../../../public/images/magnifier.png';
 
-export default function ContainerCharacters(): JSX.Element {
+export default function ContainerEvents(): JSX.Element {
 
     type DataProps = {
         thumbnail: {
             path: string,
             extension: string,
         },
-        name: string,
+        title: string,
         id: number,
         description: string,
-        comics: {
-            available: number,
-            items: {
-                name: string,
-                resourceURI: string,
-            },
-        },
     }
 
-    const [characters, setCharacters] = useState([]);
+    const [events, setEvents] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [contador, setContador] = useState(2);
     const [size, setSize] = useState([0, 0]);
@@ -64,26 +57,33 @@ export default function ContainerCharacters(): JSX.Element {
         });
     };
 
-    function getCharacters() {
+    /*function filterEvents(event: { title: string; }) {
+        return(
+            event.title.includes(searchTerm)
+        );
+    }*/
+
+    function getEvents() {
         try {
-            api.get('/characters', {
+            api.get('/events', {
                     params: {
                         limit: 40,
                     }
                 }
-            )
-              .then(response => {
-                setCharacters(response.data.data.results);
-              })
+        )
+            .then(response => { 
+                setEvents(response.data.data.results);
+            })
+            .catch(error => console.log(error));
         } catch (err) {
-        console.log(err);
+            console.log(err);
         }
     }
 
-    function moreCharacters(count: number) {
+    function moreEvents(count: number) {
         try{
             const offset = count*20;
-            api.get('/characters', {
+            api.get('/events', {
                     params: {
                         offset,
                         limit: 40,
@@ -91,29 +91,7 @@ export default function ContainerCharacters(): JSX.Element {
                 }
             )
             .then(response => {    
-                setCharacters(characters.concat(response.data.data.results));
-            })
-            .catch(
-                error => console.log(error)
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function searchCharacterByName(name: string) {
-        try{
-            axios.get(
-                `${baseURL}/characters?name=${name}&ts=${timestamp}&apikey=${publicKey}&hash=${hash}`,
-            )
-            .then(response => {
-                if (response.data.data.results === [])     {
-                    alert('Nada encontrado');
-                    console.log('entrou aqui');
-                } else {
-                    localStorage.setItem('id-character', JSON.stringify({idCharacter: response.data.data.results[0].id, limit: response.data.data.results[0].comics.available}));
-                    window.location.href = '/?page=info-character';
-                }
+                setEvents(events.concat(response.data.data.results));
             })
             .catch(
                 error => console.log(error)
@@ -124,44 +102,33 @@ export default function ContainerCharacters(): JSX.Element {
     }
 
     useEffect(() => {
-        getCharacters();
+        getEvents();
     }, []);
 
     return(
         <>
+            {/*<div className={styles.containerButtons}>
+                <button
+                    disabled={events.length === 0 ? true : false}
+                    type="button"
+                    className={styles.button}
+                    onClick={() => {
+                        handleScrollToBottom();
+                    }}
+                >
+                    Fim
+                </button>
+            </div>*/}
             <div className={styles.divHeader}>
                 <header>
                     <h1>
-                        PERSONAGENS
+                        EVENTOS
                     </h1>
                 </header>
             </div>
-            <div className={styles.search}>
-                <input 
-                    style={size[0] > 720 ? {width: '400px'} : {width: '70%'}}
-                    type="search" 
-                    placeholder="Ex: Hulk"
-                    value={searchTerm}
-                    onChange={event => {
-                        setSearchTerm(event.target.value);
-                    }}
-                />
-                <button
-                    className={styles.buttonSearch}
-                    onClick={() => {
-                    searchCharacterByName(searchTerm);
-                    }}
-                >
-                    <Image
-                        src={Lupa}
-                        width={30}
-                        height={25}
-                    />
-                </button>  
-            </div>
             <div className={styles.containerButtons}>
                 <button
-                    disabled={characters?.length === 0 ? true : false}
+                    disabled={events.length === 0 ? true : false}
                     type="button"
                     className={styles.button}
                     onClick={() => {
@@ -172,29 +139,30 @@ export default function ContainerCharacters(): JSX.Element {
                 </button>
             </div>
             <div className={styles.container}>
-                <div id="1" className={styles.containerCharacters}>
+                <div id="1" className={styles.containerEvents}>
                     { 
-                        characters?.length <= 0 ?
+                        events.length === 0 ?
                             (
                                 <LoaderIndicator />
                             )
                         :
                             (   
-                                characters
-                                    .map((data: DataProps) => {
-                                        return (
-                                            <Character 
-                                                id={data?.id}
-                                            />
-                                        );
-                                    })
+                                events
+                                //.filter(event => filterEvents(event))
+                                .map((data: DataProps) => {
+                                    return (
+                                        <Event 
+                                            id={data?.id}
+                                        />
+                                    );
+                                })
                             )  
                     }
                 </div>
             </div>
             <div className={styles.containerButtons}>
                 <button
-                    disabled={characters.length === 0 ? true : false}
+                    disabled={events.length === 0 ? true : false}
                     type="button"
                     className={styles.button}
                     onClick={() => {
@@ -204,15 +172,15 @@ export default function ContainerCharacters(): JSX.Element {
                     Inicio
                 </button>
                 <button
-                    disabled={characters.length === 0 ? true : false}
+                    disabled={events.length === 0 ? true : false}
                     type="button"
                     className={styles.button}
                     onClick={() => {
-                        moreCharacters(contador);
+                        moreEvents(contador);
                         setContador(contador + 2);
                     }}
                 >
-                    + Personagens
+                    + Eventos
                 </button>
             </div>
         </>

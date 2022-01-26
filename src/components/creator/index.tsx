@@ -14,9 +14,8 @@ type CharacterProps = {
         path: string,
         extension: string,
     },
-    name: string,
+    fullName: string,
     id: number,
-    description: string,
     comics: {
         available: number,
         items: {
@@ -30,7 +29,7 @@ type ThisProps = {
     id: number,
 }
 
-export default function Character({id}: ThisProps): JSX.Element {
+export default function Creator({id}: ThisProps): JSX.Element {
     const [data, setData] = useState<CharacterProps>();
     const [size, setSize] = useState([0, 0]);
     const [imageCharacter, setImageCharacter] = useState('https://logosmarcas.net/wp-content/uploads/2020/11/Marvel-Logo.png');
@@ -48,9 +47,9 @@ export default function Character({id}: ThisProps): JSX.Element {
 
     useWindowSize();
 
-    function getCharacterById(id: number) {
+    function getCreatorById(id: number) {
         try{
-            api.get(`/characters/${id}`)
+            api.get(`/creators/${id}`)
             .then(response => {    
                 setData(response.data.data.results[0]);
             })
@@ -63,7 +62,7 @@ export default function Character({id}: ThisProps): JSX.Element {
     }
 
     useEffect(() => {
-        getCharacterById(id);
+        getCreatorById(id);
     }, []);
 
     useEffect(() => {
@@ -74,14 +73,13 @@ export default function Character({id}: ThisProps): JSX.Element {
         <>     
             <a
                 className={styles.clickImage}
-                href={`/?page=info-character`}
                 onClick={() => {
-                    localStorage.setItem('id-character', JSON.stringify({idCharacter: data?.id, limit: data?.comics?.available}));
+                    localStorage.setItem('id-creator', JSON.stringify(data?.id));
                 }}
             >
                 {  
                     size[0] > 720 ? (
-                        <ContainerCharacter>
+                        <ContainerCreator>
                             <div id="containerImage" className={styles.containerImage}>
                                 <img
                                     id="image" 
@@ -89,13 +87,10 @@ export default function Character({id}: ThisProps): JSX.Element {
                                     src={imageCharacter} 
                                 />
                                 <div>
-                                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
-                                </div>
-                                <div className={styles.containerInformations}>
-                                    <p className={styles.description}> {data?.description} </p>
+                                    <h2 className={styles.nameCharacter}>{data?.fullName}</h2>
                                 </div>
                             </div>
-                        </ContainerCharacter>
+                        </ContainerCreator>
                     ) : (
                         <div className={styles.container}>
                             <div id="containerImage" className={styles.containerImage}>
@@ -105,7 +100,7 @@ export default function Character({id}: ThisProps): JSX.Element {
                                     src={imageCharacter} 
                                 />
                                 <div>
-                                    <h2 className={styles.nameCharacter}>{data?.name}</h2>
+                                    <h2 className={styles.nameCharacter}>{data?.fullName}</h2>
                                 </div>
                             </div>
                         </div>
@@ -116,7 +111,7 @@ export default function Character({id}: ThisProps): JSX.Element {
     );
 }
 
-const ContainerCharacter = styled.div`
+const ContainerCreator = styled.div`
     
     border-radius: 30px;
     padding: 5px;
