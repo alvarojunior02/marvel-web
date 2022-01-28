@@ -70,6 +70,13 @@ export default function Character({id}: ThisProps): JSX.Element {
         setImageCharacter(data?.thumbnail?.path + '.' + data?.thumbnail?.extension);
     }, [data]);
 
+    function configureLink(item: any) {
+        const linkCharacter = item?.thumbnail?.path + '.' + item?.thumbnail?.extension;
+        const linkSplit = linkCharacter.split('http');
+        const rightLink = linkSplit[1];
+        return ("https".concat(rightLink));
+    }
+
     return(
         <>     
             <a
@@ -103,7 +110,7 @@ export default function Character({id}: ThisProps): JSX.Element {
                                 <img
                                     id="image" 
                                     className={styles.image}
-                                    src={imageCharacter} 
+                                    src={configureLink(data)} 
                                     alt={data?.name} 
                                 />
                                 <div>
