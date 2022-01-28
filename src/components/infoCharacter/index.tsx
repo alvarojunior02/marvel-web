@@ -231,7 +231,7 @@ export default function InfoCharacter(): JSX.Element {
                                 </div>
                             </div>
                         </div>
-                        <h2>Comics: </h2>
+                        <h2 className={styles.textLists}>Comics: </h2>
                         <div className={comics?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
                             <div className={styles.containerComicsList}>
                                 {
@@ -279,7 +279,7 @@ export default function InfoCharacter(): JSX.Element {
                                 }
                             </div>
                         </div>
-                        <h2>Eventos: </h2>
+                        <h2 className={styles.textLists}>Eventos: </h2>
                         <div className={events?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
                             <div className={styles.containerComicsList}>
                                 {
@@ -329,7 +329,7 @@ export default function InfoCharacter(): JSX.Element {
                                 }
                             </div>
                         </div>
-                        <h2>Series: </h2>
+                        <h2 className={styles.textLists}>Series: </h2>
                         <div className={series?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
                             <div className={styles.containerComicsList}>
                                 {

@@ -212,7 +212,7 @@ export default function InfoComic(): JSX.Element {
                                 </div>
                             </div>
                         </div>
-                        <h2>Personagens: </h2>
+                        <h2 className={styles.textLists}>Personagens: </h2>
                         <div className={characters?.length === 0 ? styles.containerCharactersResponsive : styles.containerCharacters}>
                             <div className={styles.containerCharactersList}>
                                 {
@@ -259,9 +259,9 @@ export default function InfoComic(): JSX.Element {
                                 }
                             </div>
                         </div>
-                        <h2>Alguns dos Criadores: </h2>
-                        <div className={creators?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
-                            <div className={styles.containerComicsList}>
+                        <h2 className={styles.textLists}>Alguns dos Criadores: </h2>
+                        <div className={creators?.length === 0 ? styles.containerCreatorsResponsive : styles.containerCreators}>
+                            <div className={styles.containerCreatorsList}>
                                 {
                                     data?.creators?.available || -1 > 0 ?
                                         (   
@@ -280,16 +280,16 @@ export default function InfoComic(): JSX.Element {
                                                                     alert('Ainda nao esta implementado');
                                                                 }}
                                                             >
-                                                                <div className={styles.containerSingleComic}>
+                                                                <div className={styles.containerSingleCreator}>
                                                                     <div className={styles.containerImage}>                                                  
                                                                         <img
-                                                                            className={size[0] > 720 ? styles.imageComic : styles.imageComicResponsive}
+                                                                            className={size[0] > 720 ? styles.imageCreator : styles.imageCreatorResponsive}
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
                                                                         />
-                                                                        <div className={styles.containerTitleComic}>
-                                                                            <p className={styles.titleComic}>{item?.fullName}</p>
+                                                                        <div className={styles.containerTitleCreator}>
+                                                                            <p className={styles.titleCreator}>{item?.fullName}</p>
                                                                         </div>
                                                                     </div>
                                                                 </div>

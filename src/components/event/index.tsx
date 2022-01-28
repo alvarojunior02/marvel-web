@@ -44,7 +44,7 @@ export default function Character({id}: ThisProps): JSX.Element {
 
     function getEventById(id: number) {
         try{
-            api.get(`/comics/${id}`)
+            api.get(`/events/${id}`)
             .then(response => {    
                 setData(response.data.data.results[0]);
             })

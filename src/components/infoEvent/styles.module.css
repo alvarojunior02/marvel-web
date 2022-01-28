@@ -1,3 +1,39 @@
+.divHeader {
+    width: 100%;
+    padding: 10px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: 100px;
+    background-color: #EC1D24;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divHeaderResponsive {
+    width: 100%;
+    padding: 10px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: 150px;
+    background-color: #EC1D24;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+
 .container {
     display: flex;
     justify-content: space-around;
@@ -22,6 +58,7 @@
 }
 
 .containerCharacters {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -38,7 +75,7 @@
     width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
-    height: 260px;
+    height: 300px;
 }
 
 .containerSingleCharacter {
@@ -72,6 +109,10 @@
     text-align: center;
 }
 
+.titleLists {
+    margin-top: 50px;
+}
+
 .containerCharactersResponsive {
     display: flex;
     flex-direction: row;
@@ -80,6 +121,7 @@
 }
 
 .containerComics {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;

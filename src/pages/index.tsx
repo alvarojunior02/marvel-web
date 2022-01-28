@@ -70,7 +70,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <title>Alvaro | Marvel</title>
+      <title>Marvel Dev</title>
 
       <div className={styles.container}>
         {

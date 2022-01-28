@@ -96,7 +96,7 @@ export default function InfoEvent(): JSX.Element {
 
     function getCharacterByEventId(id: number) {
         try{
-            api.get(`/comics/${id}/characters`, {
+            api.get(`/events/${id}/characters`, {
                 params: {
                     limit: 40,
                 }
@@ -140,10 +140,10 @@ export default function InfoEvent(): JSX.Element {
 
     useEffect(() => {
         try {
-            const idComic = JSON.parse(localStorage?.getItem('id-event') || '');
-            getEvent(idComic);
-            getCharacterByEventId(idComic);
-            getCreatorsByEventId(idComic);
+            const idEvent = JSON.parse(localStorage?.getItem('id-event') || '');
+            getEvent(idEvent);
+            getCharacterByEventId(idEvent);
+            getCreatorsByEventId(idEvent);
             const {idCharacter, limit} = JSON.parse(localStorage.getItem('back-id-character') || JSON.parse('-1'));
             setIdCharacter(idCharacter);
             setNewLimit(limit);
@@ -164,6 +164,13 @@ export default function InfoEvent(): JSX.Element {
                     <LoaderIndicator />
                 ) : (
                     <>
+                        <div className={size[0] > 720 ? styles.divHeader : styles.divHeaderResponsive}>
+                            <header>
+                                <h1>
+                                    {data?.title}
+                                </h1>
+                            </header>
+                        </div>
                         <div className={styles.container}>
                             <div className={styles.body}>
                                 <div className={
@@ -188,7 +195,6 @@ export default function InfoEvent(): JSX.Element {
                                         />
                                     </div>
                                     <div className={styles.containerInfos}>
-                                        <h1 className={styles.textName}>Título: {data?.title} </h1>
                                         <p className={styles.textDescription}>
                                             <b>Descrição: </b>
                                             {
@@ -206,7 +212,7 @@ export default function InfoEvent(): JSX.Element {
                                 </div>
                             </div>
                         </div>
-                        <h2>Personagens: </h2>
+                        <h2 className={styles.titleLists}>Personagens: </h2>
                         <div className={characters?.length === 0 ? styles.containerCharactersResponsive : styles.containerCharacters}>
                             <div className={styles.containerCharactersList}>
                                 {
@@ -254,7 +260,7 @@ export default function InfoEvent(): JSX.Element {
                                 }
                             </div>
                         </div>
-                        <h2>Alguns dos Criadores: </h2>
+                        <h2 className={styles.titleLists}>Alguns dos Criadores: </h2>
                         <div className={creators?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
                             <div className={styles.containerComicsList}>
                                 {

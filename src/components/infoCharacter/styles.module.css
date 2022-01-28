@@ -10,6 +10,9 @@
     color: white;
     font-weight: bold;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .divHeaderResponsive {
@@ -58,10 +61,16 @@
 }
 
 .containerUrls {
+    margin-top: 50px;
     text-align: center;
 }
 
+.textLists {
+    margin-top: 50px;
+}
+
 .containerComics {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
