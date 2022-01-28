@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable jsx-a11y/alt-text */
 import { useState, useEffect, useLayoutEffect } from 'react';
@@ -101,6 +102,7 @@ const Home: NextPage = () => {
                           src={iconReact}
                           width={40}
                           height={40}
+                          alt="React.js"
                         />
                       </a>
                       <a target="_blank" href="https://www.typescriptlang.org/" rel="noreferrer">
@@ -108,6 +110,7 @@ const Home: NextPage = () => {
                           src={iconTypescript}
                           width={40}
                           height={40}
+                          alt="TypeScript"
                         />
                       </a>
                       <a target="_blank" href="https://nextjs.org/" rel="noreferrer">
@@ -115,6 +118,7 @@ const Home: NextPage = () => {
                           src={iconNext}
                           width={40}
                           height={40}
+                          alt="Next.js"
                         />
                       </a>
                     </div>
@@ -139,6 +143,7 @@ const Home: NextPage = () => {
                           src={gifComputer}
                           width={40}
                           height={40}
+                          alt="Gif Computer"
                         />
                       </p>  
                     </div>

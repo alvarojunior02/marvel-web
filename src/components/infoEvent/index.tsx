@@ -51,6 +51,7 @@ type ComicType = {
         path: string,
         extension: string,
     },
+    title: string,
     fullName: string,
     id: number,
     description: string,
@@ -241,6 +242,7 @@ export default function InfoEvent(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={200}
+                                                                            alt={item?.name}
                                                                         />
                                                                         <div className={styles.containerNameCharacter}>
                                                                             <p className={styles.nameCharacter}>{item?.name}</p>
@@ -288,6 +290,7 @@ export default function InfoEvent(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
+                                                                            alt={item?.title}
                                                                         />
                                                                         <div className={styles.containerTitleComic}>
                                                                             <p className={styles.titleComic}>{item?.fullName}</p>

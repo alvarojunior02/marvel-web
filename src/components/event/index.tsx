@@ -81,6 +81,7 @@ export default function Character({id}: ThisProps): JSX.Element {
                                     id="image" 
                                     className={styles.image}
                                     src={imageComic} 
+                                    alt={data?.title}  
                                 />
                                 <div>
                                     <h2 className={styles.titleEvent}>{data?.title}</h2>
@@ -96,7 +97,8 @@ export default function Character({id}: ThisProps): JSX.Element {
                                 <img
                                     id="image" 
                                     className={styles.image}
-                                    src={imageComic} 
+                                    src={imageComic}
+                                    alt={data?.title}   
                                 />
                                 <div>
                                     <h2 className={styles.titleEvent}>{data?.title}</h2>

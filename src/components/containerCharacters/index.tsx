@@ -156,6 +156,7 @@ export default function ContainerCharacters(): JSX.Element {
                         src={Lupa}
                         width={30}
                         height={25}
+                        alt="Lupa"
                     />
                 </button>  
             </div>

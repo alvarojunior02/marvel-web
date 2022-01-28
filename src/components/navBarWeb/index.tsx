@@ -39,6 +39,7 @@ export default function NavBarWeb(): JSX.Element {
                             src={marvelLogo}
                             width="120px"
                             height="80px"
+                            alt='Logo Marvel'
                         />
                     </a>
                 </div>
@@ -57,6 +58,7 @@ export default function NavBarWeb(): JSX.Element {
                                 src={iconSuperhero2}
                                 width="40"
                                 height="40"
+                                alt="Icon"
                             />
                             <p>Personagens</p>
                         </a>
@@ -74,6 +76,7 @@ export default function NavBarWeb(): JSX.Element {
                                 src={iconComics}
                                 width="40"
                                 height="40"
+                                alt="Icon"
                             />
                             <p>Comics</p>
                         </a>
@@ -91,6 +94,7 @@ export default function NavBarWeb(): JSX.Element {
                                 src={iconEvents}
                                 width="40"
                                 height="40"
+                                alt="Icon"
                             />
                             <p>Eventos</p>
                         </a>
@@ -108,6 +112,7 @@ export default function NavBarWeb(): JSX.Element {
                                 src={iconCreators}
                                 width="40"
                                 height="40"
+                                alt="Icon"
                             />
                             <p>Criadores</p>
                         </a>

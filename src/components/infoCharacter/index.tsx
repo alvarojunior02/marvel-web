@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-html-link-for-pages */
@@ -260,6 +262,7 @@ export default function InfoCharacter(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
+                                                                            alt={item?.title}  
                                                                         />
                                                                         <div className={styles.containerTitleComic}>
                                                                             <p className={styles.titleComic}>{item?.title}</p>
@@ -310,6 +313,7 @@ export default function InfoCharacter(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
+                                                                            alt={item?.title}
                                                                         />
                                                                         <div className={styles.containerTitleComic}>
                                                                             <p className={styles.titleComic}>{item?.title}</p>
@@ -358,6 +362,7 @@ export default function InfoCharacter(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
+                                                                            alt={item?.title}
                                                                         />
                                                                         <div className={styles.containerTitleComic}>
                                                                             <p className={styles.titleComic}>{item?.title}</p>
@@ -387,7 +392,7 @@ export default function InfoCharacter(): JSX.Element {
                                                 return (
                                                     <>
                                                         <div key={index}>
-                                                            <a target='_blank' href={item?.url} rel="noreferrer">
+                                                            <a target='_blank' href={item?.url}>
                                                                 <p>{item?.type.toUpperCase()}</p>
                                                             </a>
                                                         </div>

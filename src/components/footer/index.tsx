@@ -26,23 +26,23 @@ export default function NavBarWeb(): JSX.Element {
             <div className={styles.containerContacts}>   
                 <span>
                     <Link href="https://www.linkedin.com/in/alvaro-junior-831299183/">
-                    <a target="_blank">
-                        LinkedIn
-                    </a>
+                    <a target="_blank" rel="noreferrer">
+                            LinkedIn
+                        </a>
                     </Link>
                 </span>
                 <span>
                     <Link href="https://github.com/alvarojunior02/">
-                    <a target="_blank">
-                        GitHub
-                    </a>
+                    <a target="_blank" rel="noreferrer">
+                            GitHub
+                        </a>
                     </Link>
                 </span>
                 <span>
                     <Link href="https://developer.marvel.com/">
-                    <a target="_blank">
-                        Marvel API
-                    </a>
+                        <a target="_blank" rel="noreferrer">
+                            Marvel API
+                        </a>
                     </Link>
                 </span>
             </div>

@@ -85,6 +85,7 @@ export default function Creator({id}: ThisProps): JSX.Element {
                                     id="image" 
                                     className={styles.image}
                                     src={imageCharacter} 
+                                    alt={data?.fullName} 
                                 />
                                 <div>
                                     <h2 className={styles.nameCharacter}>{data?.fullName}</h2>
@@ -97,7 +98,8 @@ export default function Creator({id}: ThisProps): JSX.Element {
                                 <img
                                     id="image" 
                                     className={styles.image}
-                                    src={imageCharacter} 
+                                    src={imageCharacter}
+                                    alt={data?.fullName}  
                                 />
                                 <div>
                                     <h2 className={styles.nameCharacter}>{data?.fullName}</h2>

@@ -41,6 +41,7 @@ export default function NavBarMobile(): JSX.Element {
                             src={marvelLogo}
                             width="50"
                             height="35"
+                            alt='Logo Marvel'
                         />
                     </a>
                 </div>
@@ -60,6 +61,7 @@ export default function NavBarMobile(): JSX.Element {
                                 src={iconSuperhero2}
                                 width={iconWidth}
                                 height={iconHeight}
+                                alt="Icon"
                             />
                         </a>
                         <a
@@ -76,6 +78,7 @@ export default function NavBarMobile(): JSX.Element {
                                 src={iconComics}
                                 width={iconWidth}
                                 height={iconHeight}
+                                alt="Icon"
                             />
                         </a>
                         <a
@@ -92,6 +95,7 @@ export default function NavBarMobile(): JSX.Element {
                                 src={iconEvents}
                                 width={iconWidth}
                                 height={iconHeight}
+                                alt="Icon"
                             />
                         </a>
                         <a
@@ -108,6 +112,7 @@ export default function NavBarMobile(): JSX.Element {
                                 src={iconCreators}
                                 width={iconWidth}
                                 height={iconHeight}
+                                alt="Icon"
                             />
                         </a>
                     </nav>

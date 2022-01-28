@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-html-link-for-pages */
@@ -264,6 +265,7 @@ export default function InfoSerie(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={200}
+                                                                            alt={item?.name}
                                                                         />
                                                                         <div className={styles.containerNameCharacter}>
                                                                             <p className={styles.nameCharacter}>{item?.name}</p>
@@ -312,6 +314,7 @@ export default function InfoSerie(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
+                                                                            alt={item?.title}
                                                                         />
                                                                         <div className={styles.containerTitleComic}>
                                                                             <p className={styles.titleComic}>{item?.title}</p>
@@ -357,6 +360,7 @@ export default function InfoSerie(): JSX.Element {
                                                                             src={configureLink(item)} 
                                                                             width={200}
                                                                             height={300}
+                                                                            alt={item?.title}
                                                                         />
                                                                         <div className={styles.containerTitleComic}>
                                                                             <p className={styles.titleComic}>{item?.fullName}</p>
