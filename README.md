@@ -20,15 +20,20 @@
     :dart: Próximo objetivo: Implementar página de informações de um criador.
   </span>
   
+  <br />
+  <br />
+  
   <span>
-    Teste você mesmo o site
+    Teste você mesmo o site:
     <a target="_blank" href="https://marveldev.herokuapp.com/">
        MarvelDev
     </a>
   </span>
   
+  <br />
+  <br />
   
-  <span>
+  <span>    
     Obs: a API da Marvel permite apenas 3000 calls por dia.
   </span>
 </div>
