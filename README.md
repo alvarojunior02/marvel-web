@@ -8,9 +8,9 @@
   <span>
       Technologies used:
       <ul>
-        <li>React</li>
+        <li>React.js</li>
         <li>TypeScript</li>
-        <li>Next</li>
+        <li>Next.js</li>
         <li>axios</li>
         <li>styled-components</li>
       </ul>
