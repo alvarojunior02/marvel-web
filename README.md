@@ -1,12 +1,12 @@
 <div>
   <h3>
     <b>
-      Consumindo a API da Marvel na Web.   
+      Consuming marvel api on the web  .
     </b>
   </h3>
 
   <span>
-      Tecnologias utilizadas:
+      Technologies used:
       <ul>
         <li>React</li>
         <li>TypeScript</li>
@@ -17,14 +17,14 @@
   </span>
   
   <span>
-    :dart: Próximo objetivo: Implementar página de informações de um criador.
+    :dart: Next objective: Implement a creator information page.
   </span>
   
   <br />
   <br />
   
   <span>
-    Teste você mesmo o site:
+    Test the website:
     <a target="_blank" href="https://marveldev.herokuapp.com/">
        MarvelDev
     </a>
@@ -34,6 +34,6 @@
   <br />
   
   <span>    
-    Obs: a API da Marvel permite apenas 3000 calls por dia.
+    Ps: Marvel API only allows 3000 calls per day.
   </span>
 </div>
