@@ -1,10 +1,6 @@
-<div>
-  <h3>
-    <b>
-      Consuming marvel api on the web  .
-    </b>
-  </h3>
+## Consuming Marvel API on the web.
 
+<div>
   <span>
       Technologies used:
       <ul>
