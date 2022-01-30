@@ -147,7 +147,9 @@ export default function ContainerComics(): JSX.Element {
                         :
                             (   
                             comics
-                                //.filter(character => filterCharacters(character))
+                                .filter((data: DataProps) => {
+                                    return (!data.thumbnail.path.includes("image_not_available"))
+                                }) 
                                 .map((data: DataProps) => {
                                     return (
                                         <Comic 

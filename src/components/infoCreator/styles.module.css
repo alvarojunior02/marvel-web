@@ -1,0 +1,171 @@
+.divHeader {
+    width: 100%;
+    padding: 10px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: 100px;
+    background-color: #EC1D24;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divHeaderResponsive {
+    width: 100%;
+    padding: 10px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    height: 150px;
+    background-color: #EC1D24;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: black;
+    margin-top: 25px;
+}
+
+.containerInfos {
+    max-width: 300px;
+    margin: 20px
+}
+
+.textName {
+    font-size: 20px;
+    text-align: center;
+}
+
+.textDescription {
+    font-size: 16px;
+    text-align: justify;
+}
+
+.image {
+    border-radius: 30px;
+}
+
+.containerUrls {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.textLists {
+    margin-top: 50px;
+}
+
+.containerComics {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 420px;
+}
+
+.containerComicsList {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 430px
+}
+
+.containerSingleComic {
+    width: 265px;
+    height: 430px;
+    max-width: 240px;
+    max-height: 430px;
+    color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.containerTittleComic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageComic:hover {
+    zoom: 120%;
+}
+
+.titleComic {
+    max-width: 200px;
+    text-align: center;
+}
+
+.containerComicsResponsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerUrls h2 {
+    font-size: 20px;
+    text-align: center;
+}
+
+.containerUrls div a p {
+    font-size: 16px;
+    text-align: center;
+    margin: 25px
+}
+
+.containerUrls div a p:hover {
+    text-decoration: underline;
+}
+
+.containerButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.backButton {
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    border-radius: 30px;
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.backButton:hover {
+    background-color: #ec1d24;
+    color: white;
+}
+
+
+
+
+
+
+
+  
+  

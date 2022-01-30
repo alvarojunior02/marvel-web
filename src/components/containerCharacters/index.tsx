@@ -182,6 +182,9 @@ export default function ContainerCharacters(): JSX.Element {
                         :
                             (   
                                 characters
+                                    .filter((data: DataProps) => {
+                                        return (!data.thumbnail.path.includes("image_not_available"))
+                                    }) 
                                     .map((data: DataProps) => {
                                         return (
                                             <Character 

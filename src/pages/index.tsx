@@ -12,10 +12,13 @@ import { parseCookies } from 'nookies';
 import ContainerCharacters from '../components/containerCharacters';
 import ContainerComics from '../components/containerComics';
 import ContainerEvents from '../components/containerEvents';
+import ContainerCreators from '../components/containerCreators';
+import Character from '../components/character'
 import InfoCharacter from '../components/infoCharacter';
 import InfoComic from '../components/infoComic';
 import InfoEvent from '../components/infoEvent';
 import InfoSerie from '../components/infoSerie';
+import InfoCreator from '../components/infoCreator';
 import NavBarWeb from '../components/navBarWeb';
 import NavBarMobile from '../components/navBarMobile';
 import Footer from '../components/footer';
@@ -25,8 +28,7 @@ import gifComputer from '../../public/images/computer.gif'
 import iconReact from '../../public/images/iconReact.png';
 import iconTypescript from '../../public/images/iconTypescript.png';
 import iconNext from '../../public/images/iconNext.png';
-import Character from '../components/character'
-import ContainerCreators from '../components/containerCreators';
+
 
 type DataProps = {
   thumbnail: {
@@ -177,6 +179,10 @@ const Home: NextPage = () => {
               : page === 'creators' ?
                 (
                   <ContainerCreators />
+                )
+              : page === 'info-creator' ?
+                (
+                  <InfoCreator />
                 )
               : page === 'info-serie' ?
                 (

@@ -148,14 +148,16 @@ export default function ContainerEvents(): JSX.Element {
                         :
                             (   
                                 events
-                                //.filter(event => filterEvents(event))
-                                .map((data: DataProps) => {
-                                    return (
-                                        <Event 
-                                            id={data?.id}
-                                        />
-                                    );
-                                })
+                                    .filter((data: DataProps) => {
+                                        return (!data.thumbnail.path.includes("image_not_available"))
+                                    }) 
+                                    .map((data: DataProps) => {
+                                        return (
+                                            <Event 
+                                                id={data?.id}
+                                            />
+                                        );
+                                    })
                             )  
                     }
                 </div>

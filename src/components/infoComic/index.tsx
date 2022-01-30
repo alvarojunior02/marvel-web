@@ -275,11 +275,11 @@ export default function InfoComic(): JSX.Element {
                                                     return (
                                                         <>
                                                             <a 
+                                                                href="/?page=info-creator"
                                                                 onClick={() => {
-                                                                    //localStorage.setItem('id-creator', JSON.stringify(item?.id));
-                                                                    //localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
-                                                                    //localStorage.removeItem('id-character');
-                                                                    alert('Ainda nao esta implementado');
+                                                                    localStorage.setItem('id-creator', JSON.stringify(item?.id));
+                                                                    localStorage.setItem('back-id-comic', JSON.stringify(data?.id));
+                                                                    localStorage.removeItem('id-comic');
                                                                 }}
                                                             >
                                                                 <div className={styles.containerSingleCreator}>

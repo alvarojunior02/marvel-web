@@ -72,6 +72,7 @@ export default function Creator({id}: ThisProps): JSX.Element {
     return(
         <>     
             <a
+                href='/?page=info-creator'
                 className={styles.clickImage}
                 onClick={() => {
                     localStorage.setItem('id-creator', JSON.stringify(data?.id));

@@ -11,12 +11,12 @@ import { baseURL, timestamp, publicKey, hash } from "../../config/consts";
 import api from '../../services/api';
 import LoaderIndicator from '../loaderIndicator';
 
-type InfoCharacterProps = {
+type TypeCreatorProps = {
     thumbnail: {
         path: string,
         extension: string,
     },
-    name: string,
+    fullName: string,
     id: number,
     description: string,
     comics: {
@@ -41,7 +41,7 @@ type InfoCharacterProps = {
     ]
 }
 
-type ComicType = {
+type DataTye = {
     thumbnail: {
         path: string,
         extension: string,
@@ -53,8 +53,8 @@ type ComicType = {
     resourceURI: string,
 }
 
-export default function InfoCharacter(): JSX.Element {
-    const [data, setData] = useState<InfoCharacterProps>();
+export default function InfoCreator(): JSX.Element {
+    const [data, setData] = useState<TypeCreatorProps>();
     const [comics, setComics] = useState([]);
     const [events, setEvents] = useState([]);
     const [series, setSeries] = useState([]);
@@ -77,9 +77,9 @@ export default function InfoCharacter(): JSX.Element {
     
       useWindowSize();
 
-    function getCharacterById(id: number) {
+    function getCreatorById(id: number) {
         try{
-            api.get(`/characters/${id}`)
+            api.get(`/creators/${id}`)
             .then(response => {    
                 setData(response.data.data.results[0]);
             })
@@ -91,61 +91,7 @@ export default function InfoCharacter(): JSX.Element {
         }
     }
 
-    function getComicsByCharacter(id: number) {
-        try{
-            api.get(`/characters/${id}/comics`, {
-                params: {
-                    limit: 100,
-                }
-            })
-            .then(response => {    
-                setComics(response.data.data.results);
-            })
-            .catch(
-                error => console.log(error)
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function getEventsByCharacter(id: number) {
-        try{
-            api.get(`/characters/${id}/events`, {
-                params: {
-                    limit: 100,
-                }
-            })
-            .then(response => {    
-                setEvents(response.data.data.results);
-            })
-            .catch(
-                error => console.log(error)
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function getSeriesByCharacter(id: number) {
-        try{
-            api.get(`/characters/${id}/series`, {
-                params: {
-                    limit: 100,
-                }
-            })
-            .then(response => {    
-                setSeries(response.data.data.results);
-            })
-            .catch(
-                error => console.log(error)
-            )
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    function configureLink(item: ComicType) {
+    function configureLink(item: DataTye) {
         const linkComic = item?.thumbnail?.path + '.' + item?.thumbnail?.extension;
         const linkSplit = linkComic.split('http');
         const rightLink = linkSplit[1];
@@ -154,11 +100,11 @@ export default function InfoCharacter(): JSX.Element {
 
     useEffect(() => {
         try {
-            const {idCharacter, limit} = JSON.parse(localStorage?.getItem('id-character') || '');
-            getCharacterById(idCharacter);
-            getComicsByCharacter(idCharacter);
-            getEventsByCharacter(idCharacter);
-            getSeriesByCharacter(idCharacter);
+            const idCreator= JSON.parse(localStorage?.getItem('id-creator') || '');
+            getCreatorById(idCreator);
+            //getComicsByCharacter(idCreator);
+            //getEventsByCharacter(idCreator);
+            //getSeriesByCharacter(idCreator);
             const idComic = JSON.parse(localStorage.getItem('back-id-comic') || '-1');
             setBackIdComic(idComic);
             const idEvent = JSON.parse(localStorage.getItem('back-id-event') || '-1');
@@ -185,7 +131,7 @@ export default function InfoCharacter(): JSX.Element {
                         <div className={size[0] > 720 ? styles.divHeader : styles.divHeaderResponsive}>
                             <header>
                                 <h1>
-                                    {data?.name}
+                                    {data?.fullName}
                                 </h1>
                             </header>
                         </div>
@@ -207,30 +153,15 @@ export default function InfoCharacter(): JSX.Element {
                                             loader={() => imagemSrc}
                                             unoptimized={true}
                                             src={imagemSrc} 
-                                            alt={data?.name}
+                                            alt={data?.fullName}
                                             height={400} 
                                             width={400}
                                         />
                                     </div>
-                                    <div className={styles.containerInfos}>
-                                        <p className={styles.textDescription}>
-                                            <b>Descrição: </b>
-                                            {
-                                                data?.description !== '' ?
-                                                    (
-                                                        ' ' + data?.description
-                                                    )
-                                                :
-                                                    (
-                                                        ' *não fornecida'
-                                                    )
-                                            }
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <h2 className={styles.textLists}>Comics: </h2>
+                        {/*<h2 className={styles.textLists}>Comics: </h2>
                         <div className={comics?.length === 0 ? styles.containerComicsResponsive : styles.containerComics}>
                             <div className={styles.containerComicsList}>
                                 {
@@ -240,7 +171,7 @@ export default function InfoCharacter(): JSX.Element {
                                                 <LoaderIndicator />
                                             ) : (
                                                 comics
-                                                .map((item: ComicType, index: number) => {
+                                                .map((item: DataTye, index: number) => {
                                                     return (
                                                         <>
                                                             <a 
@@ -289,7 +220,7 @@ export default function InfoCharacter(): JSX.Element {
                                                 <LoaderIndicator />
                                             ) : (
                                                 events
-                                                .map((item: ComicType, index: number) => {
+                                                .map((item: DataTye, index: number) => {
                                                     return (
                                                         <>
                                                             <a 
@@ -340,7 +271,7 @@ export default function InfoCharacter(): JSX.Element {
                                                 <LoaderIndicator />
                                             ) : (
                                                 series
-                                                .map((item: ComicType, index: number) => {
+                                                .map((item: DataTye, index: number) => {
                                                     return (
                                                         <>
                                                             <a 
@@ -378,7 +309,7 @@ export default function InfoCharacter(): JSX.Element {
                                     )
                                 }
                             </div>
-                        </div>
+                        </div>*/}
                         <div className={styles.containerUrls}>
                             <h2>URLs Uteis: </h2>
                             {
@@ -409,8 +340,8 @@ export default function InfoCharacter(): JSX.Element {
                                             onClick={() => {
                                                 localStorage.setItem('id-comic', JSON.stringify(backIdComic));
                                                 localStorage.removeItem('back-id-comic');
-                                                localStorage.removeItem('id-character');
-                                                localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                                localStorage.removeItem('id-creator');
+                                                localStorage.setItem('back-id-creator', JSON.stringify(data?.id));
                                             }}
                                         >
                                             <p>Voltar para a Comic</p>
@@ -426,8 +357,8 @@ export default function InfoCharacter(): JSX.Element {
                                             onClick={() => {
                                                 localStorage.setItem('id-event', JSON.stringify(backIdEvent));
                                                 localStorage.removeItem('back-id-event');
-                                                localStorage.removeItem('id-character');
-                                                localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                                localStorage.removeItem('id-creator');
+                                                localStorage.setItem('back-id-creator', JSON.stringify(data?.id));
                                             }}
                                         >
                                             <p>Voltar para o Evento</p>
@@ -443,8 +374,8 @@ export default function InfoCharacter(): JSX.Element {
                                             onClick={() => {
                                                 localStorage.setItem('id-serie', JSON.stringify(backIdSerie));
                                                 localStorage.removeItem('back-id-serie');
-                                                localStorage.removeItem('id-character');
-                                                localStorage.setItem('back-id-character', JSON.stringify({idCharacter: data?.id, limit: 100}));
+                                                localStorage.removeItem('id-creator');
+                                                localStorage.setItem('back-id-creator', JSON.stringify(data?.id));
                                             }}
                                         >
                                             <p>Voltar para a Serie</p>
@@ -452,15 +383,15 @@ export default function InfoCharacter(): JSX.Element {
                                     </a>
                                 ) : null
                             }    
-                            <a href={`/?page=characters`}>
+                            <a href={`/?page=creators`}>
                                 <button
                                     className={styles.backButton}
                                     onClick={() => {
                                         localStorage.removeItem('link-comic');
-                                        localStorage.removeItem('back-character');
+                                        localStorage.removeItem('back--id-creator');
                                     }}
                                 >
-                                    <p>Voltar para Personagens</p>
+                                    <p>Voltar para Criadores</p>
                                 </button>
                             </a>
                         </div>

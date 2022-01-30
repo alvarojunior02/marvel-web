@@ -131,6 +131,9 @@ export default function ContainerCreators(): JSX.Element {
                         :
                             (   
                                 creators
+                                    .filter((data: DataProps) => {
+                                        return (!data.thumbnail.path.includes("image_not_available"))
+                                    }) 
                                     .map((data: DataProps) => {
                                         return (
                                             <Creator 
