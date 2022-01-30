@@ -13,7 +13,7 @@
   </span>
   
   <span>
-    :dart: Next objective: Implement a creator information page.
+    :dart: Next objective: Do tests of perform.
   </span>
   
   <br />
