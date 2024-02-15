@@ -12,23 +12,6 @@
       </ul>
   </span>
   
-  <span>
-    :dart: Next objective: Do tests of perform.
-  </span>
-  
-  <br />
-  <br />
-  
-  <span>
-    Test the website:
-    <a target="_blank" href="https://marveldev.herokuapp.com/">
-       MarvelDev
-    </a>
-  </span>
-  
-  <br />
-  <br />
-  
   <span>    
     Ps: Marvel API only allows 3000 calls per day.
   </span>
